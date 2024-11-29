@@ -28,6 +28,10 @@
 
   # allow non FOSS pkgs
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-27.3.11" # for logseq
+                "olm-3.2.16"
+              ];
 
   boot = {
     # clean tmp directory on boot
@@ -45,6 +49,7 @@
   # bounded journal size
   services.journald.extraConfig = "SystemMaxUse=500M";
 
+  programs.gamemode.enable = true;
   programs.bash = {
     interactiveShellInit = ''
       alias use='nix-shell -p'
@@ -64,7 +69,8 @@
   fonts.packages = with pkgs; [
     dejavu_fonts open-sans
     roboto-serif roboto-mono
-    nerdfonts ipafont
+    nerd-fonts.mononoki
+    ipafont
     libertinus andika
     helvetica-neue-lt-std
     liberation-sans-narrow
@@ -98,16 +104,31 @@
       swaynotificationcenter
       libnotify
       swww
+      swaybg
+      feh
+      timewarrior
       wofi
+      rofi-wayland
+      rofimoji
+      nautilus
       wofi-emoji
       wlr-randr
       wlogout
       gammastep
       sway-contrib.grimshot
       grimblast
+      ksnip
+      logseq
+    syncthing
+    kdePackages.kdeconnect-kde
+    kdePackages.merkuro
+    spotify
+    spotify-player
+    spotube
     ];
     shellPkgs = [
     starship
+ripgrep
     fnm
     thefuck
     zoxide
@@ -117,6 +138,8 @@
     eza
     killall
     lazygit
+    yt-dlp
+    ffmpeg-full
     ];
     # of utmost necessity for me to function
     virtPkgs = [
@@ -135,7 +158,13 @@
       stow              # dotfile management
       wirelesstools     # iwlist (wifi scan)
       gitFull           # git with send-email
-      catgirl           # IRC terminal client
+      qbittorrent
+      lutris
+      protonup-qt
+      wineWowPackages.stable
+      winetricks
+      wineWowPackages.waylandFull
+      krita
       curl              # transfer data to/from a URL
       binutils          # debugging binary files
       dos2unix          # text file conversion
@@ -144,13 +173,14 @@
       ncdu              # disk size checker
       nmap              # stats about clients in the network
       netcat-openbsd    # swiss army knife of networking
-      #man-pages          # system manpages (not included by default)
+      man-pages          # system manpages (not included by default)
       mkpasswd          # UNIX password creator
       lr                # list recursively, ls & find replacement
       ripgrep           # file content searcher, > ag > ack > grep
       rsync             # file syncing tool
       strace            # tracing syscalls
       tmux              # detachable terminal multiplexer
+      zellij
       traceroute        # trace ip routes
       wget              # the other URL file fetcher
       vim               # slight improvement over vi
@@ -160,7 +190,18 @@
       nil               # Nix language server
       rust-analyzer     # Rust language server
       gh                # github cli
-      pci-utils         # various utils for pci stuff; common for distros
+      inotify-tools     # file system event monitoring
+      filelight
+      obs-studio
+      playerctl
+      kdePackages.okular
+      brightnessctl
+      corectrl
+      kdePackages.polkit-kde-agent-1
+      protonvpn-gui
+      blender-hip
+      # surrealist
+      # pci-utils         # various utils for pci stuff; common for distros
     ];
     # Distro specific rice
     zuzeRicePkgs = [
@@ -180,10 +221,12 @@
       python3              # Python 3
       lua5_4_compat              # Lua 5.4
       lua54Packages.luarocks-nix # Lua package manager
+      gcc
       # kotlin                     # Kotlin dev env
       # openjdk17-bootstrap        # Java 17
 
       redis # for cli only, i swear
+      fuse-overlayfs
     ];
     # minimal set of gui applications
     guiPkgs = [
@@ -191,11 +234,13 @@
       dmenu             # minimal launcher
       alacritty         # rust based terminal emulator
       kitty             # another, easy configurable terminal emulator
+      wezterm
       helvum            # GTK patchbay for pipewire
       easyeffects       # pipewire sound tuner
       htop              # system monitor
-      # vscode            # graphical text editor
-      # libreoffice-fresh # fresh and spicy office tools
+lact
+      vscode            # graphical text editor
+      libreoffice-fresh # fresh and spicy office tools
     ];
     # media apps
     mediaPkgs = [
@@ -204,7 +249,7 @@
       firefox    # internet explorer
       brave
       system-config-printer # printer stuff
-      ollama
+      ollama-rocm
     ];
     # FOSS based chat apps
     libreChatPkgs = [
@@ -215,13 +260,24 @@
     vpnPkgs = [
       cloudflare-warp
     ];
+    minecraft = [
+prismlauncher
+zulu # 21	
+zulu8
+zulu17
+];
     # Chat apps with proprietary components
     unfreeChatPkgs = [
       telegram-desktop # most popular instant-messenger in the IT world
+      # _64gram
+      paper-plane
+      # kotatogram-desktop
       discord          # IRC-like proprietary chat service
+      goofcord
+      # overlayed
     ];
     in hyprPkgs ++ shellPkgs ++ virtPkgs ++ vpnPkgs ++ basePkgs ++ guiPkgs ++ mediaPkgs ++ libreChatPkgs ++ unfreeChatPkgs
-                ++ progPkgs ++ zuzeRicePkgs;
+                ++ progPkgs ++ zuzeRicePkgs ++ minecraft;
 
   programs = {
     fish.enable = true;
@@ -233,6 +289,11 @@
       enableSSHSupport = true;
     };
   };
+
+  zramSwap.enable = true;
+  # zramSwap.devices = [
+  #   { size = 2 * 1024 * 1024; priority = 100; }
+  # ];
 
   # neovim.override = { withNodeJs = true; };
 
@@ -274,24 +335,34 @@
     openssh.enable = true;
   };
 
-  # virtualisation.docker.enable = true;
   virtualisation.containers.enable = true;
   virtualisation = {
     podman = {
       enable = true;
 
       # Create a `docker` alias for podman, to use it as a drop-in replacement
-      dockerCompat = true;
+      dockerCompat = false;
 
       # Required for containers under podman-compose to be able to talk to each other.
       defaultNetwork.settings.dns_enabled = true;
     };
+    docker = {
+      enable = true;
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
+      daemon.settings = {
+        data-root = "$HOME/.docker-data";
+      };
+    };
   };
 
   # use pipewire instead of pulse
-  sound.enable = true;
+  #sound.enable = true;
   security = {
     rtkit.enable = true;
+    polkit.enable = true;
   };
   services.pipewire = {
     enable = true;
@@ -301,7 +372,7 @@
     jack.enable = true;
 
     socketActivation = true;
-    systemWide = true;
+    # systemWide = true;
 
     wireplumber.enable = true;
     wireplumber.extraConfig = {
