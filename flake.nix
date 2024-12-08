@@ -21,13 +21,14 @@
       inputs.lix.follows = "lix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
   outputs = { self, nixpkgs, chaotic, home-manager, lix-module, nur, nix-gaming, ... }@inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
-        nur.nixosModules.nur
+        nur.modules.nixos.default
         chaotic.nixosModules.default
         ./configuration.nix
         home-manager.nixosModules.home-manager

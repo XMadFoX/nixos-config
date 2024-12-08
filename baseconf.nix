@@ -1,4 +1,4 @@
- {pkgs, lib, ...}: {
+ {pkgs, lib, inputs, ...}: {
 
   imports = [
     ./codename.nix
@@ -99,54 +99,105 @@
 
   environment.systemPackages = with pkgs;
   let
-    hyprPkgs = [
-      waybar
-      swaynotificationcenter
-      libnotify
-      swww
-      swaybg
-      feh
-      timewarrior
-      wofi
-      rofi-wayland
-      rofimoji
-      nautilus
+    waylandPkgs = [
+      waybar           # Highly customizable Wayland bar
+      swaynotificationcenter # Notification daemon for Wayland
+      libnotify        # Send desktop notifications
+      swww             # Wallpaper daemon for Wayland
+      swaybg           # Background setter for Wayland
+      wofi             # Launcher for Wayland
       wofi-emoji
-      wlr-randr
-      wlogout
-      gammastep
-      sway-contrib.grimshot
+      rofi-wayland     # Window switcher and launcher
+      rofimoji         # Emoji picker
+      wlr-randr        # Display configuration tool for Wayland
+      wlogout          # Logout menu for Wayland
+      wl-clipboard
+      gammastep        # Screen color temperature adjuster
+      ksnip            # Screenshot and annotation tool
+      grimblast        # Screenshot tool for Wayland
+      sway-contrib.grimshot # Screenshot tool
       grimblast
-      ksnip
-      logseq
-    syncthing
-    kdePackages.kdeconnect-kde
-    kdePackages.merkuro
-    spotify
-    spotify-player
-    spotube
     ];
+
+    desktopPkgs = [
+      nautilus         # GNOME file manager
+      feh              # CLI Image viewer and wallpaper setter
+      logseq           # Personal knowledge management and note-taking
+      kdePackages.kdeconnect-kde # Connect Android devices to desktop
+      kdePackages.merkuro # Personal finance management app
+      kdePackages.okular # PDF and document viewer
+      kdePackages.polkit-kde-agent-1 # Authentication agent
+      kate # Simple text editor
+      filelight        # Disk usage visualization tool
+      obs-studio       # Screen recording and streaming software
+      corectrl         # Hardware control and monitoring
+      spotify
+      krita # Digital painting and image editing
+      inkscape # Vector graphics editor
+      openrgb
+      gparted
+    ];
+
+    mediaPkgs = [
+      spotify          # Music streaming service
+      spotify-player   # CLI Spotify client
+      spotube          # Open-source Spotify client
+      vlc
+      mpv
+    ];
+
+    browserPkgs = [
+      firefox          # Open-source web browser
+      brave            # Privacy-focused Chromium-based browser
+      firedragon
+      inputs.zen-browser.packages."${system}".specific
+    ];
+
     shellPkgs = [
-    starship
-ripgrep
-    fnm
-    thefuck
-    zoxide
-    fortune
-    fzf
-    bat # modern cat, with synax highlight
-    eza
-    killall
-    lazygit
-    yt-dlp
-    ffmpeg-full
+      starship         # Customizable shell prompt
+      ripgrep          # Fast text search tool
+      thefuck          # Corrects previous console command
+      zoxide           # Smarter cd command
+      fortune          # Displays random quotes
+      fzf              # Fuzzy finder
+      bat              # Modern cat with syntax highlighting
+      eza              # Modern ls replacement
+      killall          # Kills processes by name
+      playerctl        # Media player control
+      brightnessctl    # Screen brightness control
+      lazygit          # Terminal UI for git
+      yt-dlp           # YouTube video downloader
+      ffmpeg-full      # Complete multimedia framework
+      timewarrior      # Time tracking tool
+      duf              # Colorful Disk usage analyzer
     ];
-    # of utmost necessity for me to function
     virtPkgs = [
-    dive
-    podman-tui
-    podman-compose
-    fuse-overlayfs
+      dive
+      podman-tui
+      podman-compose
+      fuse-overlayfs
+    ];
+    vpnPkgs = [
+      cloudflare-warp  # Cloudflare's VPN service
+      protonvpn-gui    # ProtonVPN desktop client
+    ];
+    gamePkgs = [
+      lutris           # Linux game platform
+      bottles          # Open-source game launcher
+      protonup-qt      # Proton compatibility tool updater
+      winetricks       # Windows software installation helper
+      wineWowPackages.stable # Windows compatibility layer
+      wineWowPackages.waylandFull # Wayland-compatible Wine
+      steam
+      steam-run
+      gamescope
+      mangohud
+    ];
+    termPkgs = [
+      kitty             # Fast, feature-rich terminal
+      wezterm          # GPU-accelerated terminal
+      alacritty         # GPU-accelerated terminal
+      wezterm
     ];
     basePkgs = [
       nano              # beginner friendly editor
@@ -159,12 +210,9 @@ ripgrep
       wirelesstools     # iwlist (wifi scan)
       gitFull           # git with send-email
       qbittorrent
-      lutris
-      protonup-qt
       wineWowPackages.stable
       winetricks
       wineWowPackages.waylandFull
-      krita
       curl              # transfer data to/from a URL
       binutils          # debugging binary files
       dos2unix          # text file conversion
@@ -191,17 +239,15 @@ ripgrep
       rust-analyzer     # Rust language server
       gh                # github cli
       inotify-tools     # file system event monitoring
-      filelight
-      obs-studio
-      playerctl
-      kdePackages.okular
-      brightnessctl
-      corectrl
-      kdePackages.polkit-kde-agent-1
-      protonvpn-gui
       blender-hip
-      # surrealist
-      # pci-utils         # various utils for pci stuff; common for distros
+      surrealist
+      ollama-rocm
+      syncthing        # Continuous file synchronization
+      pciutils         # various utils for pci stuff; common for distros
+      home-manager
+      mesa-demos
+      rocmPackages.rocm-runtime
+      appimage-run
     ];
     # Distro specific rice
     zuzeRicePkgs = [
@@ -217,14 +263,10 @@ ripgrep
     ];
     # Programming languages
     progPkgs = [
-      #pypy3
       python3              # Python 3
       lua5_4_compat              # Lua 5.4
       lua54Packages.luarocks-nix # Lua package manager
       gcc
-      # kotlin                     # Kotlin dev env
-      # openjdk17-bootstrap        # Java 17
-
       redis # for cli only, i swear
       fuse-overlayfs
     ];
@@ -232,34 +274,14 @@ ripgrep
     guiPkgs = [
       gtklp             # CUPS gui
       dmenu             # minimal launcher
-      alacritty         # rust based terminal emulator
-      kitty             # another, easy configurable terminal emulator
-      wezterm
       helvum            # GTK patchbay for pipewire
       easyeffects       # pipewire sound tuner
       htop              # system monitor
-lact
+      lact              # AMD GPU monitoring tool
       vscode            # graphical text editor
       libreoffice-fresh # fresh and spicy office tools
     ];
-    # media apps
-    mediaPkgs = [
-      mpv        # lightweight media player
-      vlc        # encoder-rich media player
-      firefox    # internet explorer
-      brave
-      system-config-printer # printer stuff
-      ollama-rocm
-    ];
     # FOSS based chat apps
-    libreChatPkgs = [
-      # mattermost-desktop  # libre slack alternative
-      # element-web         # feature-rich matrix client
-      # dino                # GTK-based XMPP messenger
-    ];
-    vpnPkgs = [
-      cloudflare-warp
-    ];
     minecraft = [
 prismlauncher
 zulu # 21	
@@ -267,16 +289,17 @@ zulu8
 zulu17
 ];
     # Chat apps with proprietary components
-    unfreeChatPkgs = [
+    chatPkgs = [
       telegram-desktop # most popular instant-messenger in the IT world
-      # _64gram
-      paper-plane
-      # kotatogram-desktop
+      _64gram
+      kotatogram-desktop
       discord          # IRC-like proprietary chat service
       goofcord
-      # overlayed
+    legcord
+    element-desktop
+    telegram-desktop
     ];
-    in hyprPkgs ++ shellPkgs ++ virtPkgs ++ vpnPkgs ++ basePkgs ++ guiPkgs ++ mediaPkgs ++ libreChatPkgs ++ unfreeChatPkgs
+    in waylandPkgs ++ shellPkgs ++ browserPkgs ++ termPkgs ++ gamePkgs ++ desktopPkgs ++ virtPkgs ++ vpnPkgs ++ basePkgs ++ guiPkgs ++ mediaPkgs ++ chatPkgs
                 ++ progPkgs ++ zuzeRicePkgs ++ minecraft;
 
   programs = {
