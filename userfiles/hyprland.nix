@@ -53,9 +53,6 @@
           vibrancy = 0.5; # 0.1696
         };
 
-        drop_shadow = false;
-        shadow_range = 4;
-        shadow_render_power = 3;
         # col.shadow = rgba(1a1a1aee)
       };
 
@@ -83,7 +80,7 @@ dwindle = {
 
 master = {
     # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-    new_is_master = true;
+    new_status = "master";
 };
 
 gestures = {

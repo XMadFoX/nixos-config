@@ -107,8 +107,10 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
   };
 
   # Enable CUPS to print documents.
@@ -119,7 +121,7 @@
   users.users.madfox = {
     isNormalUser = true;
     description = "madfox";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 
   # Install firefox.
@@ -146,9 +148,9 @@
 
   services.flatpak.enable = true;
 
-  hardware.opengl.enable = true;
-  hardware.opengl.extraPackages = [ pkgs.mesa.drivers ];
-  hardware.opengl.driSupport32Bit = true;
+  hardware.graphics.enable = true;
+  hardware.graphics.extraPackages = [ pkgs.mesa.drivers ];
+  hardware.graphics.enable32Bit = true;
 
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
 
