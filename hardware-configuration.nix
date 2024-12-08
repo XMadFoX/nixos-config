@@ -9,9 +9,18 @@
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usb_storage" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = ["amdgpu"];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+  ];
+
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/e32116fa-1ee5-4a03-8d8a-53c9302ce054";

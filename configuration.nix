@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./baseconf.nix
+      ./services.nix
     ];
 
   # Bootloader.
@@ -79,6 +80,8 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.hardware.openrgb.enable = true;
+
   services.power-profiles-daemon.enable = false; 
 
   services.tlp = {
