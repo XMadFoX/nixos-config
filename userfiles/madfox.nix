@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, catppuccin, ... }:
 
 {
   home.username = "madfox";
@@ -15,6 +15,12 @@
     ./hyprland.nix
   ];
 
+  catppuccin.enable = true;
+  catppuccin.flavor = "mocha";
+  gtk = {
+    enable = true;
+    catppuccin.enable = true;
+  };
 
   
   home.stateVersion = "23.11";

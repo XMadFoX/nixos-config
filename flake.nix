@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    catppuccin.url = "github:catppuccin/nix";
 
     home-manager = {
         url = "github:nix-community/home-manager";
@@ -24,18 +25,24 @@
     zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
-  outputs = { self, nixpkgs, chaotic, home-manager, lix-module, nur, nix-gaming, ... }@inputs: {
+  outputs = { self, nixpkgs, chaotic, catppuccin, home-manager, lix-module, nur, nix-gaming, ... }@inputs: {
     nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs;};
       modules = [
         nur.modules.nixos.default
         chaotic.nixosModules.default
+        catppuccin.nixosModules.catppuccin
         ./configuration.nix
         home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.madfox = import ./userfiles/madfox.nix;
+            home-manager.users.madfox = {
+              imports = [
+                ./userfiles/madfox.nix
+                catppuccin.homeManagerModules.catppuccin
+              ];
+            };
             home-manager.backupFileExtension = "backup";
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
