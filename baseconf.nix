@@ -141,15 +141,24 @@
     mediaPkgs = [
       spotify          # Music streaming service
       spotify-player   # CLI Spotify client
+      (ncspot.override {
+           withCover = true;
+         })
       spotube          # Open-source Spotify client
       vlc
-      mpv
+      cava
+      (mpv.override {
+        scripts = [
+          mpvScripts.mpris
+          mpvScripts.modernz
+        ];
+      })
+      pwvucontrol
     ];
 
     browserPkgs = [
       firefox          # Open-source web browser
       brave            # Privacy-focused Chromium-based browser
-      firedragon
       inputs.zen-browser.packages."${system}".default
     ];
 
