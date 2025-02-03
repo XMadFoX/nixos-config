@@ -19,15 +19,10 @@
       efi.canTouchEfiVariables = true;
     };
     initrd.secrets = {
-      "/crypto_keyfile.bin" = "/crypto_keyfile.bin";
     };
     initrd.luks.devices = {
-      "luks-64832d03-aefb-4f5a-8122-bf75ecffa902" = {
-        device = "/dev/disk/by-uuid/64832d03-aefb-4f5a-8122-bf75ecffa902";
-      };
       "luks-home" = {
-        device = "/dev/disk/by-uuid/62b224ba-406b-4d34-b7bb-a49607a647a8";
-        keyFile = "/crypto_keyfile.bin";
+        device = "/dev/disk/by-uuid/06413967-0ee3-4e76-908d-2671b5e8f026";
       };
     };
 
@@ -46,7 +41,7 @@
 
   fileSystems."/home" = {
     device = "/dev/mapper/luks-home";
-    fsType = "bcachefs";
+    fsType = "btrfs";
     options = [ "defaults" ];  # You can specify more mount options if needed
   };
 
@@ -183,5 +178,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 }
