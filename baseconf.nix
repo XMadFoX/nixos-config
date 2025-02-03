@@ -176,6 +176,10 @@
       podman-tui
       podman-compose
       fuse-overlayfs
+      gnupg
+      docker
+      docker-credential-helpers
+      pass
     ];
     vpnPkgs = [
       cloudflare-warp  # Cloudflare's VPN service
