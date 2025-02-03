@@ -9,11 +9,22 @@
 
   programs.fish = {
     enable = true;
+    interactiveShellInit = ''
+      set fish_greeting # Disable greeting
+
+      alias j=z
+      # nix
+      alias use='nix-shell -p'
+    '';
   };
 
   imports = [
     ./hyprland.nix
   ];
+
+  programs = {
+    zoxide.enable = true;
+  };
 
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
