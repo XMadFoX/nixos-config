@@ -170,6 +170,11 @@
       ffmpeg-full      # Complete multimedia framework
       timewarrior      # Time tracking tool
       duf              # Colorful Disk usage analyzer
+      kubectl
+      kubectx
+      kubetui
+      kubespy
+      kubeconform
     ];
     virtPkgs = [
       dive
