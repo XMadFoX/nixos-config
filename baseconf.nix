@@ -150,7 +150,7 @@
       firefox          # Open-source web browser
       brave            # Privacy-focused Chromium-based browser
       firedragon
-      inputs.zen-browser.packages."${system}".specific
+      inputs.zen-browser.packages."${system}".default
     ];
 
     shellPkgs = [

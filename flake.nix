@@ -22,7 +22,7 @@
       inputs.lix.follows = "lix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
+    zen-browser.url = "github:youwen5/zen-browser-flake";
   };
 
   outputs = { self, nixpkgs, chaotic, catppuccin, home-manager, lix-module, nur, nix-gaming, ... }@inputs: {
