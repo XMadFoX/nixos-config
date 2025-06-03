@@ -38,10 +38,19 @@
 
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
+  catppuccin.mako.enable = true;
   gtk = {
     enable = true;
     catppuccin.enable = true;
   };
+  qt.style.catppuccin = {
+    enable = true;
+    apply = true;
+    accent = "blue";
+    flavor = "mocha";
+  };
+  qt.style.name = "kvantum";
+  qt.platformTheme.name = "kvantum";
 
   
   home.stateVersion = "23.11";
