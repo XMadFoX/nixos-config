@@ -5,7 +5,8 @@
   home.homeDirectory = "/home/madfox";
 
   # Let home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  #programs.home-manager.enable = true;
+  #home-manager.backupFileExtension = "backup";
 
   programs.fish = {
     enable = true;
@@ -17,6 +18,15 @@
       alias use='nix-shell -p'
     '';
   };
+
+  services.gammastep = {
+     dawnTime = "23:00";
+     duskTime = "07:00";
+     temperature.day = 6500;
+     temperature.night = 3700;
+     tray = true;
+   };
+
 
   imports = [
     ./hyprland.nix

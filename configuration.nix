@@ -56,7 +56,7 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "UTC";
+  time.timeZone = "Asia/Tbilisi";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -110,6 +110,7 @@
       variant = "";
     };
   };
+  services.syncthing.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -119,7 +120,7 @@
   users.users.madfox = {
     isNormalUser = true;
     description = "madfox";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "adbusers" ];
   };
 
   # Install firefox.
