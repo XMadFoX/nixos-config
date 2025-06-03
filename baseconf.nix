@@ -29,8 +29,8 @@
   # allow non FOSS pkgs
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
+    "beekeeper-studio-5.2.9"
     "electron-27.3.11" # for logseq
-                "olm-3.2.16"
               ];
 
   boot = {
@@ -46,8 +46,11 @@
     freeMemThreshold = 5; # <5% free
   };
 
+   
   # bounded journal size
   services.journald.extraConfig = "SystemMaxUse=500M";
+
+   services.logmein-hamachi.enable = true;
 
   programs.gamemode.enable = true;
   programs.bash = {
@@ -71,6 +74,7 @@
         fi
     '';
   };
+   programs.adb.enable = true;
 
   fonts.packages = with pkgs; [
     dejavu_fonts open-sans
@@ -123,6 +127,9 @@
       grimblast        # Screenshot tool for Wayland
       sway-contrib.grimshot # Screenshot tool
       grimblast
+      hyprlock
+      hyprpicker
+      hyprsunset
     ];
 
     desktopPkgs = [
@@ -133,8 +140,8 @@
       kdePackages.merkuro # Personal finance management app
       kdePackages.okular # PDF and document viewer
       kdePackages.polkit-kde-agent-1 # Authentication agent
-      kate # Simple text editor
-      filelight        # Disk usage visualization tool
+      kdePackages.kate # Simple text editor
+      kdePackages.filelight        # Disk usage visualization tool
       obs-studio       # Screen recording and streaming software
       corectrl         # Hardware control and monitoring
       spotify
@@ -142,6 +149,8 @@
       inkscape # Vector graphics editor
       openrgb
       gparted
+      beekeeper-studio
+      crow-translate
     ];
 
     mediaPkgs = [
@@ -171,7 +180,7 @@
     shellPkgs = [
       starship         # Customizable shell prompt
       ripgrep          # Fast text search tool
-      thefuck          # Corrects previous console command
+      pay-respects     # Corrects previous console command. Modern "thefuck" alternative written in rust
       zoxide           # Smarter cd command
       fortune          # Displays random quotes
       fzf              # Fuzzy finder
@@ -205,6 +214,7 @@
     vpnPkgs = [
       cloudflare-warp  # Cloudflare's VPN service
       protonvpn-gui    # ProtonVPN desktop client
+      haguichi
     ];
     gamePkgs = [
       lutris           # Linux game platform
@@ -234,6 +244,8 @@
       stow              # dotfile management
       wirelesstools     # iwlist (wifi scan)
       gitFull           # git with send-email
+      git-town
+      glab
       qbittorrent
       wineWowPackages.stable
       winetricks
@@ -304,6 +316,7 @@
       htop              # system monitor
       lact              # AMD GPU monitoring tool
       vscode            # graphical text editor
+      code-cursor
       libreoffice-fresh # fresh and spicy office tools
     ];
     # FOSS based chat apps
@@ -429,6 +442,7 @@ zulu17
         "bluez5.enable-msbc" = true;
         "bluez5.enable-hw-volume" = true;
         "bluez5.roles" = [ "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag" ];
+         "bluez5.autoswitch-profile" = false;
       };
     };
 
