@@ -7,10 +7,15 @@
     enable = true;
 
     settings = {
-      source= ["./themes/mocha.conf"];
+      # monitor = ["eDP-1,2560x1440@96.011002,0x0,1" "DP-1,3440x1440@144,2560x0,1" "HDMI-A-1,3440x1440@72.028000,auto,1"];
+      # monitor = ["eDP-1,2560x1440@96.011002,0x0,1" "DP-1,3440x1440@144,2560x0,1, vrr, 2" "HDMI-A-1,preferred,auto,1,mirror,DP-1"];
+      monitor = ["eDP-1,2560x1440@96.011002,0x0,1.25" "DP-1,3440x1440@144,2560x0,1, vrr, 1" "HDMI-A-1,preferred,auto,1"];
+      # workspace= ["eDP-1,1" "HDMI-A-1,2" "DP-1,3"];
+      workspace= ["eDP-1,1" "HDMI-A-1,3" "DP-1,2"];
+      source= ["/home/madfox/hypr/mocha.conf"];
 
       input = {
-        kb_layout = "us";
+        kb_layout = "us,ru";
         kb_options = "grp:alt_shift_toggle,caps:swapescape";
 
         follow_mouse = 1;
@@ -21,7 +26,21 @@
         };
 
         sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
-      };
+
+              };
+          device = {
+           name = "asue120a:00-04f3:319b-touchpad";
+           enabled = true;
+         };
+        # device = {
+        #   name = "asus-keyboard";
+        #   repeat_rate = 50;
+        #     repeat_delay = 200;
+        # };
+
+
+	# exec-once= "bash /home/madfox/hypr-utils/start-waybar.sh";
+      exec-once= "waybar";
 
       general = {
         # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -96,12 +115,14 @@ gestures = {
 };
 
 windowrulev2 = [ "suppressevent maximize, class:.*" # You'll probably like this.
- "opacity 0.8 0.8,class:^(kitty)$"
+ "opacity 0.9 0.8 0.9,class:^(kitty)$"
+ "opacity 0.9 0.8 0.9,class:^(alacritty)$"
  "float,class:^(polkit)$"
  ];
 
       "$fileManager" = "dolphin";
-      "$menu" = "wofi --show drun";
+      # "$menu" = "wofi --show drun";
+      "$menu" = "rofi -show drun";
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
 
@@ -117,10 +138,14 @@ windowrulev2 = [ "suppressevent maximize, class:.*" # You'll probably like this.
 "SUPERSHIFT,Q,killactive,"
 "SUPERSHIFT,E,exec,wlogout"
 "CTRLSUPER,P,pin,"
-"SUPERCTRLSHIFT,L,exec,$HOME/lock.sh" # L"
-"SUPER,D,exec,bash /home/madfox/wofi.sh" # D"
+# "SUPERCTRLSHIFT,L,exec,$HOME/lock.sh" # L"
+"SUPERCTRLSHIFT,L,exec,hyprlock" # L"
+"SUPER,B,exec,hyprlock" # L"
+# "SUPER,D,exec,bash /home/madfox/wofi.sh" # D"
+"SUPER,D,exec,wofi --show drun" # D"
 "SUPERSHIFT,D,exec,rofi -show window"
-"SUPER,B,exec,$HOME/wofi.sh emoji"
+# "SUPER,B,exec,bash $HOME/wofi.sh emoji"
+"SUPER,E,exec,rofimoji"
 "SUPERSHIFT,N,exec,swaync-client -t -sw"
 # ""
 "SHIFT,Print,exec,grimshot copy"
@@ -175,6 +200,8 @@ windowrulev2 = [ "suppressevent maximize, class:.*" # You'll probably like this.
 # "# Example special workspace (scratchpad)"
 "$mainMod, S, togglespecialworkspace, magic"
 "$mainMod SHIFT, S, movetoworkspace, special:magic"
+        "$mainMod, M, togglespecialworkspace, msg"
+"$mainMod SHIFT, M, movetoworkspace, special:msg"
 # ""
 # "# Scroll through existing workspaces with mainMod + scroll"
 "$mainMod, mouse_down, workspace, e+1"
@@ -195,6 +222,7 @@ windowrulev2 = [ "suppressevent maximize, class:.*" # You'll probably like this.
 ",XF86AudioStop,exec,playerctl stop"
 ",XF86AudioNext,exec,playerctl next"
 ",XF86AudioPrev,exec,playerctl previous"
+"WIN, F1, exec, ~/.config/hypr/gamemode.sh"
       ];
     };
   };
