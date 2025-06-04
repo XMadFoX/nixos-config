@@ -7,7 +7,7 @@
     catppuccin.url = "github:catppuccin/nix";
 
     home-manager = {
-        url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
@@ -25,15 +25,27 @@
     zen-browser.url = "github:youwen5/zen-browser-flake";
   };
 
-  outputs = { self, nixpkgs, chaotic, catppuccin, home-manager, lix-module, nur, nix-gaming, ... }@inputs: {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
-      modules = [
-        nur.modules.nixos.default
-        chaotic.nixosModules.default
-        catppuccin.nixosModules.catppuccin
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
+  outputs =
+    {
+      self,
+      nixpkgs,
+      chaotic,
+      catppuccin,
+      home-manager,
+      lix-module,
+      nur,
+      nix-gaming,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          nur.modules.nixos.default
+          chaotic.nixosModules.default
+          catppuccin.nixosModules.catppuccin
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -47,7 +59,7 @@
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
           }
-      ];
+        ];
+      };
     };
-  };
 }

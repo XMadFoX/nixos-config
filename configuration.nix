@@ -1,16 +1,19 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, inputs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./baseconf.nix
-      ./services.nix
-    ];
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./baseconf.nix
+    ./services.nix
+  ];
 
   # Bootloader.
   boot = {
@@ -26,23 +29,23 @@
       };
     };
 
-    supportedFilesystems = ["bcachefs"];
+    supportedFilesystems = [ "bcachefs" ];
 
     # register appimage-run to run appimages
     binfmt.registrations.appimage = {
-  wrapInterpreterInShell = false;
-  interpreter = "${pkgs.appimage-run}/bin/appimage-run";
-  recognitionType = "magic";
-  offset = 0;
-  mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
-  magicOrExtension = ''\x7fELF....AI\x02'';
-};
+      wrapInterpreterInShell = false;
+      interpreter = "${pkgs.appimage-run}/bin/appimage-run";
+      recognitionType = "magic";
+      offset = 0;
+      mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
+      magicOrExtension = ''\x7fELF....AI\x02'';
+    };
   };
 
   fileSystems."/home" = {
     device = "/dev/mapper/luks-home";
     fsType = "btrfs";
-    options = [ "defaults" ];  # You can specify more mount options if needed
+    options = [ "defaults" ]; # You can specify more mount options if needed
   };
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -77,27 +80,27 @@
   services.xserver.enable = true;
   services.hardware.openrgb.enable = true;
 
-  services.power-profiles-daemon.enable = false; 
+  services.power-profiles-daemon.enable = false;
 
   services.tlp = {
-      enable = true;
-      settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
 
-        CPU_MIN_PERF_ON_AC = 0;
-        CPU_MAX_PERF_ON_AC = 100;
-        CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 20;
+      CPU_MIN_PERF_ON_AC = 0;
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MIN_PERF_ON_BAT = 0;
+      CPU_MAX_PERF_ON_BAT = 20;
 
-       #Optional helps save long term battery health
-       START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
-       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
-      };
-};
+      #Optional helps save long term battery health
+      START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
+      STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
+    };
+  };
 
   services.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
@@ -115,12 +118,16 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.madfox = {
     isNormalUser = true;
     description = "madfox";
-    extraGroups = [ "networkmanager" "wheel" "docker" "adbusers" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "adbusers"
+    ];
   };
 
   # Install firefox.
@@ -132,9 +139,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
-    programs.nix-ld.enable = true;
+  programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
-  glibc
+    glibc
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
   ];
@@ -171,7 +178,6 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

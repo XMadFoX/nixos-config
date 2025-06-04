@@ -1,5 +1,9 @@
-{ config, pkgs, catppuccin, ... }:
-
+{
+  config,
+  pkgs,
+  catppuccin,
+  ...
+}:
 {
   home.username = "madfox";
   home.homeDirectory = "/home/madfox";
@@ -20,13 +24,12 @@
   };
 
   services.gammastep = {
-     dawnTime = "23:00";
-     duskTime = "07:00";
-     temperature.day = 6500;
-     temperature.night = 3700;
-     tray = true;
-   };
-
+    dawnTime = "23:00";
+    duskTime = "07:00";
+    temperature.day = 6500;
+    temperature.night = 3700;
+    tray = true;
+  };
 
   imports = [
     ./hyprland.nix
@@ -52,6 +55,5 @@
   qt.style.name = "kvantum";
   qt.platformTheme.name = "kvantum";
 
-  
   home.stateVersion = "23.11";
 }
