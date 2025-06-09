@@ -38,13 +38,13 @@
       ...
     }@inputs:
     {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.tsiteli = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
           nur.modules.nixos.default
           chaotic.nixosModules.default
           catppuccin.nixosModules.catppuccin
-          ./configuration.nix
+          ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

@@ -11,8 +11,8 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./baseconf.nix
-    ./services.nix
+    ../../baseconf.nix
+    ../../services.nix
   ];
 
   # Bootloader.
@@ -48,7 +48,7 @@
     options = [ "defaults" ]; # You can specify more mount options if needed
   };
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "tsiteli"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

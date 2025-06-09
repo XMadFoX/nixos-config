@@ -311,7 +311,6 @@
         fastfetch
         zsh-you-should-use
         any-nix-shell
-        zsh-history
         zsh-vi-mode
         oh-my-zsh
         oh-my-fish
