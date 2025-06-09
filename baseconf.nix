@@ -300,7 +300,8 @@
         inotify-tools # file system event monitoring
         blender-hip
         surrealist
-        ollama-rocm
+        ollama
+        nixfmt-rfc-style
         syncthing # Continuous file synchronization
         pciutils # various utils for pci stuff; common for distros
         home-manager
@@ -439,7 +440,17 @@
     # default touchpad support
     libinput.enable = true;
 
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = true;
+      };
+    };
+
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+    };
   };
 
   virtualisation.containers.enable = true;
