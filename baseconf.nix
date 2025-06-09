@@ -245,7 +245,7 @@
         winetricks # Windows software installation helper
         wineWowPackages.stable # Windows compatibility layer
         wineWowPackages.waylandFull # Wayland-compatible Wine
-        steam
+        hydralauncher
         steam-run
         gamescope
         mangohud
@@ -383,6 +383,16 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
+    };
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    };
+    gamescope = {
+      enable = true;
+      capSysNice = true;
     };
   };
 
