@@ -2,6 +2,7 @@
   config,
   pkgs,
   catppuccin,
+  inputs,
   ...
 }:
 {
@@ -44,8 +45,11 @@
   catppuccin.mako.enable = true;
   gtk = {
     enable = true;
-    catppuccin.enable = true;
+    theme = {
+      name = "catppuccin-frappe-blue-standard";
+      package = pkgs.catppuccin-gtk;
   };
+  qt.enable = true;
   qt.style.catppuccin = {
     enable = true;
     apply = true;

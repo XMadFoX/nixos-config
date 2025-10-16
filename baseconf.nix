@@ -109,6 +109,16 @@
     fira-code-nerdfont
     rictydiminished-with-firacode
     fira-go
+    nerd-fonts.caskaydia-cove
+    font-awesome
+    tokyonight-gtk-theme
+    catppuccin
+    catppuccin-gtk
+    catppuccin-qt5ct
+    catppuccin-fcitx5
+    catppuccin-kvantum
+    catppuccin-cursors
+    magnetic-catppuccin-gtk
   ];
   fonts.fontconfig = {
     enable = true;
