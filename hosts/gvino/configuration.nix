@@ -22,7 +22,7 @@
 
   boot.initrd.luks.devices."luks-017b78f4-bbac-4bb5-9444-552eff123289".device =
     "/dev/disk/by-uuid/017b78f4-bbac-4bb5-9444-552eff123289";
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "gvino"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   nix.settings.experimental-features = [
