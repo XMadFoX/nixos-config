@@ -111,6 +111,9 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "dialout"
+      "docker"
+      "adbusers"
     ];
     packages = with pkgs; [
       kdePackages.kate
