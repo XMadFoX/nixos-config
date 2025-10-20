@@ -241,6 +241,7 @@
         gnupg
         docker
         docker-credential-helpers
+        nvidia-container-toolkit
         pass
       ];
       vpnPkgs = [
