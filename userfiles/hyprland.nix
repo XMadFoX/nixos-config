@@ -121,6 +121,7 @@
         force_default_wallpaper = -1; # Set to 0 to disable the anime mascot wallpapers
         # variable refresh rate (stale while no updates, battery optimization)
         vfr = true;
+        enable_anr_dialog = false;
       };
 
       windowrulev2 = [
