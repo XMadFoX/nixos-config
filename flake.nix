@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    master.url = "github:nixos/nixpkgs/master";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     catppuccin.url = "github:catppuccin/nix";
 
@@ -11,6 +12,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
     nix-gaming.url = "github:fufexan/nix-gaming";
     nur.url = "github:nix-community/NUR";
     lix = {
@@ -23,6 +28,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser.url = "github:youwen5/zen-browser-flake";
+    mango.url = "github:DreamMaoMao/mango";
   };
 
   outputs =
@@ -30,29 +36,54 @@
       self,
       nixpkgs,
       chaotic,
+      master,
       catppuccin,
       home-manager,
       lix-module,
       nur,
       nix-gaming,
+      mango,
       ...
     }@inputs:
     {
+      packages = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (
+        system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              (import ./overlays/opencode.nix)
+            ];
+          };
+        in
+        {
+          opencode = pkgs.opencode;
+        }
+      );
+
       nixosConfigurations.tsiteli = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
           nur.modules.nixos.default
           chaotic.nixosModules.default
           catppuccin.nixosModules.catppuccin
+          {
+            nixpkgs.overlays = [
+              (import ./overlays/ollama.nix)
+              (import ./overlays/opencode.nix)
+            ];
+          }
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
+          mango.nixosModules.mango
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.madfox = {
               imports = [
                 ./userfiles/madfox.nix
-                catppuccin.homeManagerModules.catppuccin
+                catppuccin.homeModules.catppuccin
+                mango.hmModules.mango
               ];
             };
             home-manager.backupFileExtension = "backup";
@@ -67,15 +98,23 @@
           nur.modules.nixos.default
           chaotic.nixosModules.default
           catppuccin.nixosModules.catppuccin
+          {
+            nixpkgs.overlays = [
+              (import ./overlays/ollama.nix)
+              (import ./overlays/opencode.nix)
+            ];
+          }
           ./hosts/gvino/configuration.nix
           home-manager.nixosModules.home-manager
+          mango.nixosModules.mango
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.madfox = {
               imports = [
                 ./userfiles/madfox.nix
-                catppuccin.homeManagerModules.catppuccin
+                catppuccin.homeModules.catppuccin
+                mango.hmModules.mango
               ];
             };
             home-manager.backupFileExtension = "backup";

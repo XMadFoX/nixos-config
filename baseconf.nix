@@ -41,7 +41,7 @@
   # allow non FOSS pkgs
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
-    "beekeeper-studio-5.2.9"
+    "beekeeper-studio-5.3.4"
     "electron-27.3.11" # for logseq
   ];
 
@@ -149,7 +149,7 @@
         swaybg # Background setter for Wayland
         wofi # Launcher for Wayland
         wofi-emoji
-        rofi-wayland # Window switcher and launcher
+        rofi # Window switcher and launcher
         rofimoji # Emoji picker
         wlr-randr # Display configuration tool for Wayland
         wlogout # Logout menu for Wayland
@@ -183,6 +183,7 @@
         gparted
         beekeeper-studio
         crow-translate
+        super-productivity
       ];
 
       mediaPkgs = [
@@ -206,7 +207,9 @@
       browserPkgs = [
         firefox # Open-source web browser
         brave # Privacy-focused Chromium-based browser
+        vivaldi
         inputs.zen-browser.packages."${system}".default
+        ungoogled-chromium
       ];
 
       shellPkgs = [
@@ -226,12 +229,17 @@
         ffmpeg-full # Complete multimedia framework
         timewarrior # Time tracking tool
         duf # Colorful Disk usage analyzer
+        lm_sensors
         zoxide
         kubectl
         kubectx
         kubetui
         kubespy
         kubeconform
+        gemini-cli
+        opencode
+        hunspellDicts.en_US
+        hunspell
       ];
       virtPkgs = [
         dive
@@ -260,6 +268,10 @@
         steam-run
         gamescope
         mangohud
+        vulkan-tools
+        lsfg-vk
+        lsfg-vk-ui
+        glfw3-minecraft
       ];
       termPkgs = [
         kitty # Fast, feature-rich terminal
@@ -280,9 +292,6 @@
         git-town
         glab
         qbittorrent
-        wineWowPackages.stable
-        winetricks
-        wineWowPackages.waylandFull
         curl # transfer data to/from a URL
         binutils # debugging binary files
         dos2unix # text file conversion
@@ -323,6 +332,7 @@
       # Distro specific rice
       zuzeRicePkgs = [
         hyfetch # superior queer fetch script
+        onefetch # neofetch for git stats
         uwufetch
         fastfetch
         zsh-you-should-use
@@ -355,9 +365,14 @@
       # FOSS based chat apps
       minecraft = [
         prismlauncher
+        badlion-client
+        lunar-client
         zulu # 21
         zulu8
         zulu17
+        jre17_minimal
+        # graalvmPackages.graalvm-oracle_17
+        temurin-jre-bin-17
       ];
       # Chat apps with proprietary components
       chatPkgs = [
@@ -367,6 +382,7 @@
         discord # IRC-like proprietary chat service
         goofcord
         legcord
+        dorion
         element-desktop
         telegram-desktop
       ];
