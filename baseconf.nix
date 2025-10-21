@@ -14,6 +14,7 @@
       auto-optimise-store = true;
       max-jobs = "auto";
       sandbox = true;
+      extra-platforms = [ "aarch64-linux" ];
       experimental-features = [
         "nix-command"
         "flakes"
@@ -48,6 +49,7 @@
   boot = {
     # clean tmp directory on boot
     tmp.cleanOnBoot = true;
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   # the kernel OOM is not good enough without swap,
