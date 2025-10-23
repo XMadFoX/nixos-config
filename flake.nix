@@ -29,6 +29,7 @@
     };
     zen-browser.url = "github:youwen5/zen-browser-flake";
     mango.url = "github:DreamMaoMao/mango";
+    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs =
@@ -77,6 +78,10 @@
           home-manager.nixosModules.home-manager
           mango.nixosModules.mango
           {
+            nix.settings = {
+              substituters = [ "https://niri.cachix.org" ];
+              trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+            };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.madfox = {
@@ -84,6 +89,7 @@
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
+                inputs.niri.homeModules.niri
               ];
             };
             home-manager.backupFileExtension = "backup";
@@ -108,6 +114,10 @@
           home-manager.nixosModules.home-manager
           mango.nixosModules.mango
           {
+            nix.settings = {
+              substituters = [ "https://niri.cachix.org" ];
+              trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+            };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.madfox = {
@@ -115,6 +125,7 @@
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
+                inputs.niri.homeModules.niri
               ];
             };
             home-manager.backupFileExtension = "backup";

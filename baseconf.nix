@@ -153,6 +153,7 @@
         wofi-emoji
         rofi # Window switcher and launcher
         rofimoji # Emoji picker
+        fuzzel # like rofi & dmenu, but fuzzy :3
         wlr-randr # Display configuration tool for Wayland
         wlogout # Logout menu for Wayland
         wl-clipboard
@@ -164,6 +165,8 @@
         hyprlock
         hyprpicker
         hyprsunset
+        xwayland-satellite # for xwayland conpatibility
+        xdg-desktop-portal-gnome
       ];
 
       desktopPkgs = [

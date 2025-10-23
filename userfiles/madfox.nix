@@ -24,6 +24,10 @@
     '';
   };
 
+  programs.niri.enable = true;
+  # TODO:
+  programs.niri.settings = null;
+
   services.gammastep = {
     dawnTime = "23:00";
     duskTime = "07:00";
