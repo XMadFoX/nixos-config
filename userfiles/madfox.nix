@@ -52,6 +52,7 @@
     theme = {
       name = "catppuccin-frappe-blue-standard";
       package = pkgs.catppuccin-gtk;
+    };
   };
   qt.enable = true;
   qt.style.catppuccin = {
