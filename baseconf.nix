@@ -108,10 +108,10 @@
     fira
     fira-mono
     fira-code
-    fira-code-nerdfont
     rictydiminished-with-firacode
     fira-go
     nerd-fonts.caskaydia-cove
+    nerd-fonts.fira-code
     font-awesome
     tokyonight-gtk-theme
     catppuccin
