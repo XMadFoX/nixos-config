@@ -75,6 +75,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     modesetting.enable = true;
     nvidiaSettings = true;
+    # fixes suspend issues
+    powerManagement.enable = true;
   };
 
 }
