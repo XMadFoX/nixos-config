@@ -34,7 +34,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mango.url = "github:DreamMaoMao/mango";
-    niri.url = "github:sodiboo/niri-flake";
+
+    niri = {
+      url = "github:Naxdy/niri";
+    };
   };
 
   outputs =
@@ -79,6 +82,9 @@
               (import ./overlays/opencode.nix)
             ];
           }
+
+          inputs.niri.nixosModules.default
+
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
           mango.nixosModules.mango
@@ -94,7 +100,7 @@
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
-                inputs.niri.homeModules.niri
+                inputs.niri.homeManagerModules.default
               ];
             };
             home-manager.backupFileExtension = "backup";
@@ -115,8 +121,24 @@
               (import ./overlays/opencode.nix)
             ];
           }
+
+          inputs.niri.nixosModules.default
+
           ./hosts/gvino/configuration.nix
           home-manager.nixosModules.home-manager
+          ({ config, lib, pkgs, ... }: {
+            # takes care of setting up portals & other system services
+            programs.niri.enable = true;
+
+            programs.uwsm = {
+              enable = true;
+              waylandCompositors.niri = {
+                prettyName = "niri";
+                comment = "niri compositor (fork) managed by UWSM";
+                binPath = "/run/current-system/sw/bin/niri";
+              };
+            };
+          })
           mango.nixosModules.mango
           {
             nix.settings = {
@@ -130,7 +152,7 @@
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
-                inputs.niri.homeModules.niri
+                inputs.niri.homeManagerModules.default
               ];
             };
             home-manager.backupFileExtension = "backup";
