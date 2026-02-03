@@ -34,9 +34,12 @@
     '';
   };
 
-  programs.niri.enable = true;
-  # TODO:
-  programs.niri.settings = null;
+  wayland.windowManager.niri = {
+    enable = true;
+    package = null;
+    settings = import ./niri.nix { inherit pkgs; };
+  };
+
 
   services.gammastep = {
     dawnTime = "23:00";
