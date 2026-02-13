@@ -40,6 +40,16 @@
     settings = import ./niri.nix { inherit pkgs; };
   };
 
+  programs.dank-material-shell = {
+    enable = true;
+    enableSystemMonitoring = true;
+    enableVPN = true;
+    enableDynamicTheming = true;
+    enableAudioWavelength = true;
+    enableCalendarEvents = true;
+    enableClipboardPaste = true;
+    plugins = { };
+  };
 
   services.gammastep = {
     dawnTime = "23:00";

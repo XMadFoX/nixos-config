@@ -34,6 +34,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     mango.url = "github:DreamMaoMao/mango";
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     niri = {
       url = "github:Naxdy/niri";
@@ -100,6 +104,7 @@
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
+                inputs.dms.homeModules.dank-material-shell
                 inputs.niri.homeManagerModules.default
               ];
             };
@@ -152,6 +157,7 @@
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
+                inputs.dms.homeModules.dank-material-shell
                 inputs.niri.homeManagerModules.default
               ];
             };
