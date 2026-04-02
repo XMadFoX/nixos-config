@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -10,6 +15,7 @@
     ./hardware-configuration.nix
     ../../baseconf.nix
     ../../services.nix
+    inputs.hyprland.nixosModules.default
   ];
 
   # Bootloader.
@@ -58,20 +64,44 @@
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
+
   xdg = {
     portal = {
       enable = true;
-      config.niri = {
-         default = ["gnome" "gtk"];
-            "org.freedesktop.impl.portal.Access" = "gtk";
-            "org.freedesktop.impl.portal.FileChooser" = "gtk";
-            "org.freedesktop.impl.portal.ScreenCast" = "gnome";
-            "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+      config = {
+        niri = {
+          default = [
+            "gnome"
+            "gtk"
+          ];
+          "org.freedesktop.impl.portal.Access" = "gtk";
+          "org.freedesktop.impl.portal.FileChooser" = "gtk";
+          "org.freedesktop.impl.portal.ScreenCast" = "gnome";
+          "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+        };
+        hyprland = {
+          default = [
+            "hyprland"
+            "gtk"
+          ];
+          "org.freedesktop.impl.portal.Access" = "gtk";
+          "org.freedesktop.impl.portal.FileChooser" = "gtk";
+          "org.freedesktop.impl.portal.ScreenCast" = "hyprland";
+          "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+        };
       };
       extraPortals = with pkgs; [
-         xdg-desktop-portal-gnome
-         xdg-desktop-portal-gtk
-         xdg-desktop-portal-wlr
+        xdg-desktop-portal-gnome
+        xdg-desktop-portal-gtk
+        kdePackages.xdg-desktop-portal-kde
       ];
     };
   };

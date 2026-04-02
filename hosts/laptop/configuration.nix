@@ -13,6 +13,7 @@
     ./hardware-configuration.nix
     ../../baseconf.nix
     ../../services.nix
+    inputs.hyprland.nixosModules.default
   ];
 
   # Bootloader.
@@ -104,7 +105,14 @@
 
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -148,7 +156,6 @@
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [
-    pkgs.xdg-desktop-portal-wlr
     pkgs.xdg-desktop-portal-gtk
     pkgs.xdg-desktop-portal-gnome
   ];
@@ -162,6 +169,16 @@
       "org.freedesktop.impl.portal.Access" = "gtk";
       "org.freedesktop.impl.portal.FileChooser" = "gtk";
       "org.freedesktop.impl.portal.ScreenCast" = "gnome";
+      "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+    };
+    hyprland = {
+      default = [
+        "hyprland"
+        "gtk"
+      ];
+      "org.freedesktop.impl.portal.Access" = "gtk";
+      "org.freedesktop.impl.portal.FileChooser" = "gtk";
+      "org.freedesktop.impl.portal.ScreenCast" = "hyprland";
       "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
     };
   };

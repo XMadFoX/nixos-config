@@ -1,10 +1,22 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  inputs,
+  ...
+}:
 {
 
   # programs.hyprland.enable = true;
 
   wayland.windowManager.hyprland = {
     enable = true;
+    package = null;
+    portalPackage = null;
+    plugins = [
+      # Keep plugin packages sourced from the hyprland-plugins flake so they stay
+      # locked to the same Hyprland revision as the compositor itself.
+      # inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
+    ];
+    systemd.variables = [ "--all" ];
 
     settings = {
       # monitor = ["eDP-1,2560x1440@96.011002,0x0,1" "DP-1,3440x1440@144,2560x0,1" "HDMI-A-1,3440x1440@72.028000,auto,1"];
@@ -111,10 +123,10 @@
         new_status = "master";
       };
 
-      gestures = {
+      gesture = [
         # See https://wiki.hyprland.org/Configuring/Variables/ for more
-        workspace_swipe = true;
-      };
+        "3, horizontal, workspace"
+      ];
 
       misc = {
         # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -124,12 +136,12 @@
         enable_anr_dialog = false;
       };
 
-      windowrulev2 = [
-        "suppressevent maximize, class:.*" # You'll probably like this.
-        "opacity 0.9 0.8 0.9,class:^(kitty)$"
-        "opacity 0.9 0.8 0.9,class:^(alacritty)$"
-        "float,class:^(polkit)$"
-      ];
+      windowrule = [
+      "match:class .*, suppress_event maximize"
+      "match:class ^(kitty)$, opacity 0.9 0.8 0.9"
+      "match:class ^(alacritty)$, opacity 0.9 0.8 0.9"
+      "match:class ^(polkit)$, float on"
+    ];
 
       "$fileManager" = "dolphin";
       # "$menu" = "wofi --show drun";
