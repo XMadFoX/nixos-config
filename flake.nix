@@ -66,6 +66,7 @@
             inherit system;
             overlays = [
               (import ./overlays/opencode.nix)
+              (import ./overlays/zed-editor.nix)
             ];
           };
         in
@@ -84,6 +85,7 @@
             nixpkgs.overlays = [
               (import ./overlays/ollama.nix)
               (import ./overlays/opencode.nix)
+              (import ./overlays/zed-editor.nix)
             ];
           }
 
@@ -124,6 +126,7 @@
             nixpkgs.overlays = [
               (import ./overlays/ollama.nix)
               (import ./overlays/opencode.nix)
+              (import ./overlays/zed-editor.nix)
             ];
           }
 
