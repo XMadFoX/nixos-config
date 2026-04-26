@@ -62,11 +62,12 @@
       packages = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (
         system:
         let
+          opencodeOverlay = import ./overlays/opencode.nix { inherit master; };
           pkgs = import nixpkgs {
             inherit system;
             overlays = [
-              (import ./overlays/opencode.nix)
               (import ./overlays/zed-editor.nix)
+              opencodeOverlay
             ];
           };
         in
@@ -84,7 +85,6 @@
           {
             nixpkgs.overlays = [
               (import ./overlays/ollama.nix)
-              (import ./overlays/opencode.nix)
               (import ./overlays/zed-editor.nix)
             ];
           }
@@ -125,8 +125,8 @@
           {
             nixpkgs.overlays = [
               (import ./overlays/ollama.nix)
-              (import ./overlays/opencode.nix)
               (import ./overlays/zed-editor.nix)
+              (import ./overlays/opencode.nix { inherit master; })
             ];
           }
 
