@@ -1,6 +1,6 @@
 final: prev:
 let
-  version = "0.11.11";
+  version = "0.12.9";
 in
 {
   ollama = prev.ollama.overrideAttrs (old: {
@@ -16,4 +16,3 @@ in
     vendorHash = "sha256-SlaDsu001TUW+t9WRp7LqxUSQSGDF1Lqu9M1bgILoX4=";
   });
 }
-

@@ -66,6 +66,7 @@
           pkgs = import nixpkgs {
             inherit system;
             overlays = [
+              (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               opencodeOverlay
             ];
@@ -73,6 +74,8 @@
         in
         {
           opencode = pkgs.opencode;
+          llama-cpp-turboquant = pkgs.llama-cpp-turboquant;
+          llama-cpp-turboquant-cuda = pkgs.llama-cpp-turboquant-cuda;
         }
       );
 
@@ -84,8 +87,9 @@
           catppuccin.nixosModules.catppuccin
           {
             nixpkgs.overlays = [
-              (import ./overlays/ollama.nix)
+              (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
+              # (import ./overlays/ollama.nix)
             ];
           }
 
@@ -124,8 +128,9 @@
           catppuccin.nixosModules.catppuccin
           {
             nixpkgs.overlays = [
-              (import ./overlays/ollama.nix)
+              (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
+              # (import ./overlays/ollama.nix)
               (import ./overlays/opencode.nix { inherit master; })
             ];
           }
