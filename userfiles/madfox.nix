@@ -40,6 +40,14 @@
     settings = import ./niri.nix { inherit pkgs; };
   };
 
+  wayland.windowManager.mango = {
+    enable = true;
+    package = pkgs.callPackage "${inputs.mango}/nix" {
+      scenefx = pkgs.scenefx;
+      "libxcb-wm" = pkgs.libxcb-wm;
+    };
+  };
+
   programs.dank-material-shell = {
     enable = true;
     enableSystemMonitoring = true;
@@ -62,6 +70,8 @@
   imports = [
     ./hyprland.nix
   ];
+
+  xdg.configFile."uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
 
   programs = {
     zoxide.enable = true;

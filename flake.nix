@@ -105,8 +105,10 @@
             };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.madfox = {
               imports = [
+                inputs.hyprland.homeManagerModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
@@ -139,19 +141,27 @@
 
           ./hosts/gvino/configuration.nix
           home-manager.nixosModules.home-manager
-          ({ config, lib, pkgs, ... }: {
-            # takes care of setting up portals & other system services
-            programs.niri.enable = true;
+          (
+            {
+              config,
+              lib,
+              pkgs,
+              ...
+            }:
+            {
+              # takes care of setting up portals & other system services
+              programs.niri.enable = true;
 
-            programs.uwsm = {
-              enable = true;
-              waylandCompositors.niri = {
-                prettyName = "niri";
-                comment = "niri compositor (fork) managed by UWSM";
-                binPath = "/run/current-system/sw/bin/niri";
+              programs.uwsm = {
+                enable = true;
+                waylandCompositors.niri = {
+                  prettyName = "niri";
+                  comment = "niri compositor (fork) managed by UWSM";
+                  binPath = "/run/current-system/sw/bin/niri";
+                };
               };
-            };
-          })
+            }
+          )
           mango.nixosModules.mango
           {
             nix.settings = {
@@ -160,8 +170,10 @@
             };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.madfox = {
               imports = [
+                inputs.hyprland.homeManagerModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
