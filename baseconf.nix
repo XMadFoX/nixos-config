@@ -214,6 +214,7 @@
         brave # Privacy-focused Chromium-based browser
         vivaldi
         inputs.zen-browser.packages."${system}".default
+        inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
         ungoogled-chromium
       ];
 

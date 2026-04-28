@@ -33,6 +33,10 @@
       # to have it up-to-date or simply don't specify the nixpkgs input
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    helium = {
+      url = "github:schembriaiden/helium-browser-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     mango.url = "github:DreamMaoMao/mango";
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
@@ -68,12 +72,14 @@
             overlays = [
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
+              (import ./overlays/pi-coding-agent.nix)
               opencodeOverlay
             ];
           };
         in
         {
           opencode = pkgs.opencode;
+          pi-coding-agent = pkgs.pi-coding-agent;
           llama-cpp-turboquant = pkgs.llama-cpp-turboquant;
           llama-cpp-turboquant-cuda = pkgs.llama-cpp-turboquant-cuda;
         }
@@ -89,6 +95,7 @@
             nixpkgs.overlays = [
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
+              (import ./overlays/pi-coding-agent.nix)
               # (import ./overlays/ollama.nix)
             ];
           }
@@ -132,6 +139,7 @@
             nixpkgs.overlays = [
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
+              (import ./overlays/pi-coding-agent.nix)
               # (import ./overlays/ollama.nix)
               (import ./overlays/opencode.nix { inherit master; })
             ];
