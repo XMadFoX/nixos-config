@@ -244,6 +244,7 @@
         kubeconform
         gemini-cli
         opencode
+        pi-coding-agent
         hunspellDicts.en_US
         hunspell
       ];
