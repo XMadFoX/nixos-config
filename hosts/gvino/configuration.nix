@@ -118,6 +118,11 @@
     variant = "";
   };
 
+  services.xserver.displayManager = {
+    gdm.enable = false;
+    lightdm.enable = true;
+  };
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
