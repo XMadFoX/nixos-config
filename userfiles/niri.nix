@@ -11,7 +11,6 @@
 
     touchpad = {
       tap = [ ];
-      natural-scroll = [ ];
     };
 
     mouse = {
@@ -31,9 +30,18 @@
   #     mode = "3440x1440@144.00";
   #   }
   # ];
-  outputs."DP-1" = {
+  output = [
+    {
+      _args = [ "DP-1" ];
       mode = "3440x1440@144.00";
-    };
+    }
+    {
+      _args = [ "eDP-1" ];
+      mode = "2560x1440@165.003006";
+      scale = 1.25;
+    }
+  ];
+
 
   workspace = [
     { _args = [ "special" ]; }
