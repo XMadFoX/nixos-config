@@ -96,6 +96,7 @@
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
+              (import ./overlays/openldap.nix)
               # (import ./overlays/ollama.nix)
             ];
           }
@@ -140,6 +141,7 @@
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
+              (import ./overlays/openldap.nix)
               # (import ./overlays/ollama.nix)
               (import ./overlays/opencode.nix { inherit master; })
             ];

@@ -281,8 +281,9 @@
         bottles # Open-source game launcher
         protonup-qt # Proton compatibility tool updater
         winetricks # Windows software installation helper
-        wineWowPackages.stable # Windows compatibility layer
-        wineWowPackages.waylandFull # Wayland-compatible Wine
+        # wineWowPackages.stable # Windows compatibility layer
+        # wineWowPackages.waylandFull # Wayland-compatible Wine
+        wine64Packages.waylandFull
         hydralauncher
         steam-run
         gamescope
