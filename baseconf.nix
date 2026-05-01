@@ -42,7 +42,7 @@
   # allow non FOSS pkgs
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
-    "beekeeper-studio-5.3.4"
+    "beekeeper-studio-5.5.5"
     "electron-27.3.11" # for logseq
   ];
 
@@ -87,7 +87,6 @@
         fi
     '';
   };
-  programs.adb.enable = true;
 
   fonts.packages = with pkgs; [
     dejavu_fonts
@@ -151,9 +150,8 @@
         swaybg # Background setter for Wayland
         wofi # Launcher for Wayland
         wofi-emoji
-        rofi # Window switcher and launcher
-        rofimoji # Emoji picker
         fuzzel # like rofi & dmenu, but fuzzy :3
+        vicinae # modern raycast-like launcher
         wlr-randr # Display configuration tool for Wayland
         wlogout # Logout menu for Wayland
         wl-clipboard
@@ -165,6 +163,7 @@
         hyprlock
         hyprpicker
         hyprsunset
+        hyprlax # wallpapers with paralax
         xwayland-satellite # for xwayland conpatibility
         xdg-desktop-portal-gnome
       ];
@@ -187,6 +186,7 @@
         openrgb
         gparted
         beekeeper-studio
+        anki # cards
         crow-translate
         super-productivity
       ];
@@ -245,8 +245,16 @@
         gemini-cli
         opencode
         pi-coding-agent
+        zed-editor-fhs
+        tokei # line count
+        delta # git diff cli
+        dive # docker image analysis
+        gitui # in rust
+        psmisc # fuser
+        cloudflared
         hunspellDicts.en_US
         hunspell
+        android-tools #adb
       ];
       virtPkgs = [
         dive
@@ -285,6 +293,7 @@
         wezterm # GPU-accelerated terminal
         alacritty # GPU-accelerated terminal
         wezterm
+        ghostty
       ];
       basePkgs = [
         nano # beginner friendly editor
@@ -292,6 +301,7 @@
         nh
         nvd
         nix-output-monitor
+        attic-client # nix cache
         smartmontools # check disk state
         stow # dotfile management
         wirelesstools # iwlist (wifi scan)
@@ -325,9 +335,6 @@
         rust-analyzer # Rust language server
         gh # github cli
         inotify-tools # file system event monitoring
-        blender-hip
-        surrealist
-        ollama
         nixfmt-rfc-style
         syncthing # Continuous file synchronization
         pciutils # various utils for pci stuff; common for distros
@@ -361,7 +368,7 @@
       guiPkgs = [
         gtklp # CUPS gui
         dmenu # minimal launcher
-        helvum # GTK patchbay for pipewire
+        crosspipe # PipeWire patchbay
         easyeffects # pipewire sound tuner
         htop # system monitor
         lact # AMD GPU monitoring tool
@@ -385,11 +392,10 @@
       chatPkgs = [
         telegram-desktop # most popular instant-messenger in the IT world
         _64gram
-        kotatogram-desktop
         discord # IRC-like proprietary chat service
         goofcord
         legcord
-        dorion
+        # dorion webkit build is broken for now
         element-desktop
         telegram-desktop
       ];
