@@ -60,10 +60,14 @@
     freeMemThreshold = 5; # <5% free
   };
 
+  services.gnome.gnome-keyring.enable = true;
+
   # bounded journal size
   services.journald.extraConfig = "SystemMaxUse=500M";
 
   services.logmein-hamachi.enable = true;
+
+  services.flatpak.enable = true;
 
   programs.gamemode.enable = true;
   programs.bash = {
@@ -562,4 +566,5 @@
   services.blueman.enable = true;
 
   services.tailscale.enable = true;
+  services.netbird.enable = true;
 }
