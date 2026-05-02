@@ -43,8 +43,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    niri-src = {
+      url = "github:niri-wm/niri/v26.04";
+      flake = false;
+    };
     niri = {
-      url = "github:Naxdy/niri";
+      url = "github:sodiboo/niri-flake/very-refactor";
+      inputs.niri-stable.follows = "niri-src";
     };
   };
 
@@ -93,6 +98,15 @@
           catppuccin.nixosModules.catppuccin
           {
             nixpkgs.overlays = [
+              inputs.niri.overlays.niri
+              (final: prev: {
+                niri-stable = prev.niri-stable.overrideAttrs {
+                  postFixup = ''
+                    substituteInPlace $out/lib/systemd/user/niri.service \
+                      --replace-fail "ExecStart=niri" "ExecStart=$out/bin/niri"
+                  '';
+                };
+              })
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
@@ -101,7 +115,7 @@
             ];
           }
 
-          inputs.niri.nixosModules.default
+          inputs.niri.nixosModules.niri
 
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
@@ -121,7 +135,6 @@
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
                 inputs.dms.homeModules.dank-material-shell
-                inputs.niri.homeManagerModules.default
               ];
             };
             home-manager.backupFileExtension = "backup";
@@ -138,6 +151,15 @@
           catppuccin.nixosModules.catppuccin
           {
             nixpkgs.overlays = [
+              inputs.niri.overlays.niri
+              (final: prev: {
+                niri-stable = prev.niri-stable.overrideAttrs {
+                  postFixup = ''
+                    substituteInPlace $out/lib/systemd/user/niri.service \
+                      --replace-fail "ExecStart=niri" "ExecStart=$out/bin/niri"
+                  '';
+                };
+              })
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
@@ -147,7 +169,7 @@
             ];
           }
 
-          inputs.niri.nixosModules.default
+          inputs.niri.nixosModules.niri
 
           ./hosts/gvino/configuration.nix
           home-manager.nixosModules.home-manager
@@ -161,12 +183,13 @@
             {
               # takes care of setting up portals & other system services
               programs.niri.enable = true;
+              programs.niri.package = pkgs.niri-stable;
 
               programs.uwsm = {
                 enable = true;
                 waylandCompositors.niri = {
                   prettyName = "niri";
-                  comment = "niri compositor (fork) managed by UWSM";
+                  comment = "niri compositor managed by UWSM";
                   binPath = "/run/current-system/sw/bin/niri";
                 };
               };
@@ -188,7 +211,6 @@
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
                 inputs.dms.homeModules.dank-material-shell
-                inputs.niri.homeManagerModules.default
               ];
             };
             home-manager.backupFileExtension = "backup";

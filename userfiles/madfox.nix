@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   catppuccin,
   inputs,
@@ -34,11 +35,7 @@
     '';
   };
 
-  wayland.windowManager.niri = {
-    enable = true;
-    package = null;
-    settings = import ./niri.nix { inherit pkgs; };
-  };
+  programs.niri.settings = import ./niri.nix { inherit lib pkgs inputs; };
 
   wayland.windowManager.mango = {
     enable = true;
