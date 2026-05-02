@@ -1,4 +1,9 @@
-{ lib, pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   kdl = inputs.niri.lib.kdl;
 
@@ -112,6 +117,7 @@ in
   };
 
   spawn-at-startup = [
+    { argv = [ "noctalia-shell" ]; }
     { argv = [ "waybar" ]; }
     { argv = [ "swww-daemon" ]; }
     {

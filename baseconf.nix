@@ -182,6 +182,7 @@
         kdePackages.polkit-kde-agent-1 # Authentication agent
         kdePackages.kate # Simple text editor
         kdePackages.filelight # Disk usage visualization tool
+        kdePackages.kirigami.unwrapped # compatibility
         obs-studio # Screen recording and streaming software
         corectrl # Hardware control and monitoring
         spotify
