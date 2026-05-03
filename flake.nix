@@ -1,6 +1,17 @@
 {
   description = "Nixos config flake";
 
+  nixConfig = {
+    extra-substituters = [
+      "https://noctalia.cachix.org"
+      "https://vicinae.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     master.url = "github:nixos/nixpkgs/master";
@@ -42,9 +53,19 @@
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vicinae.url = "github:vicinaehq/vicinae";
 
+    niri-src = {
+      url = "github:niri-wm/niri/v26.04";
+      flake = false;
+    };
     niri = {
-      url = "github:Naxdy/niri";
+      url = "github:sodiboo/niri-flake/very-refactor";
+      inputs.niri-stable.follows = "niri-src";
     };
   };
 
@@ -93,6 +114,15 @@
           catppuccin.nixosModules.catppuccin
           {
             nixpkgs.overlays = [
+              inputs.niri.overlays.niri
+              (final: prev: {
+                niri-stable = prev.niri-stable.overrideAttrs {
+                  postFixup = ''
+                    substituteInPlace $out/lib/systemd/user/niri.service \
+                      --replace-fail "ExecStart=niri" "ExecStart=$out/bin/niri"
+                  '';
+                };
+              })
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
@@ -101,15 +131,21 @@
             ];
           }
 
-          inputs.niri.nixosModules.default
+          inputs.niri.nixosModules.niri
 
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
           mango.nixosModules.mango
           {
             nix.settings = {
-              substituters = [ "https://niri.cachix.org" ];
-              trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+              substituters = [
+                "https://niri.cachix.org"
+                "https://vicinae.cachix.org"
+              ];
+              trusted-public-keys = [
+                "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+                "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+              ];
             };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -117,11 +153,12 @@
             home-manager.users.madfox = {
               imports = [
                 inputs.hyprland.homeManagerModules.default
+                inputs.vicinae.homeManagerModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
                 inputs.dms.homeModules.dank-material-shell
-                inputs.niri.homeManagerModules.default
+                inputs.noctalia.homeModules.default
               ];
             };
             home-manager.backupFileExtension = "backup";
@@ -138,6 +175,15 @@
           catppuccin.nixosModules.catppuccin
           {
             nixpkgs.overlays = [
+              inputs.niri.overlays.niri
+              (final: prev: {
+                niri-stable = prev.niri-stable.overrideAttrs {
+                  postFixup = ''
+                    substituteInPlace $out/lib/systemd/user/niri.service \
+                      --replace-fail "ExecStart=niri" "ExecStart=$out/bin/niri"
+                  '';
+                };
+              })
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
@@ -147,7 +193,7 @@
             ];
           }
 
-          inputs.niri.nixosModules.default
+          inputs.niri.nixosModules.niri
 
           ./hosts/gvino/configuration.nix
           home-manager.nixosModules.home-manager
@@ -161,12 +207,13 @@
             {
               # takes care of setting up portals & other system services
               programs.niri.enable = true;
+              programs.niri.package = pkgs.niri-stable;
 
               programs.uwsm = {
                 enable = true;
                 waylandCompositors.niri = {
                   prettyName = "niri";
-                  comment = "niri compositor (fork) managed by UWSM";
+                  comment = "niri compositor managed by UWSM";
                   binPath = "/run/current-system/sw/bin/niri";
                 };
               };
@@ -175,8 +222,14 @@
           mango.nixosModules.mango
           {
             nix.settings = {
-              substituters = [ "https://niri.cachix.org" ];
-              trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+              substituters = [
+                "https://niri.cachix.org"
+                "https://vicinae.cachix.org"
+              ];
+              trusted-public-keys = [
+                "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+                "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+              ];
             };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -184,11 +237,12 @@
             home-manager.users.madfox = {
               imports = [
                 inputs.hyprland.homeManagerModules.default
+                inputs.vicinae.homeManagerModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
                 inputs.dms.homeModules.dank-material-shell
-                inputs.niri.homeManagerModules.default
+                inputs.noctalia.homeModules.default
               ];
             };
             home-manager.backupFileExtension = "backup";

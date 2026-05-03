@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   catppuccin,
   inputs,
@@ -34,11 +35,7 @@
     '';
   };
 
-  wayland.windowManager.niri = {
-    enable = true;
-    package = null;
-    settings = import ./niri.nix { inherit pkgs; };
-  };
+  programs.niri.settings = import ./niri.nix { inherit lib pkgs inputs; };
 
   wayland.windowManager.mango = {
     enable = true;
@@ -67,8 +64,20 @@
     tray = true;
   };
 
+  services.vicinae = {
+    enable = true;
+    systemd = {
+      enable = true;
+      autoStart = true;
+      environment = {
+        USE_LAYER_SHELL = 1;
+      };
+    };
+  };
+
   imports = [
     ./hyprland.nix
+    ./noctalia.nix
   ];
 
   xdg.configFile."uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";

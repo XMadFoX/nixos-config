@@ -155,7 +155,6 @@
         wofi # Launcher for Wayland
         wofi-emoji
         fuzzel # like rofi & dmenu, but fuzzy :3
-        vicinae # modern raycast-like launcher
         wlr-randr # Display configuration tool for Wayland
         wlogout # Logout menu for Wayland
         wl-clipboard
@@ -182,6 +181,7 @@
         kdePackages.polkit-kde-agent-1 # Authentication agent
         kdePackages.kate # Simple text editor
         kdePackages.filelight # Disk usage visualization tool
+        kdePackages.kirigami.unwrapped # compatibility
         obs-studio # Screen recording and streaming software
         corectrl # Hardware control and monitoring
         spotify

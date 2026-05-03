@@ -106,12 +106,15 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-  programs.niri.enable = true;
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri-stable;
+  };
   programs.uwsm = {
     enable = true;
     waylandCompositors.niri = {
       prettyName = "niri";
-      comment = "niri compositor (fork) managed by UWSM";
+      comment = "niri compositor managed by UWSM";
       binPath = "/run/current-system/sw/bin/niri";
     };
   };
