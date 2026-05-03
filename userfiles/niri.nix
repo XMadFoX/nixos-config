@@ -118,11 +118,6 @@ in
 
   spawn-at-startup = [
     { argv = [ "noctalia-shell" ]; }
-    { argv = [ "waybar" ]; }
-    { argv = [ "swww-daemon" ]; }
-    {
-      sh = "sleep 1 && swww img /home/madfox/Downloads/blahaj-wallpaper-rainbow_upscayl_4x_digital-art-4x.png";
-    }
     { argv = [ "xwayland-satellite" ]; }
     { argv = [ "swaync" ]; }
     { argv = [ "easyeffects" ]; }
@@ -194,8 +189,11 @@ in
       action.spawn = "kitty";
     };
     "Mod+D" = {
-      hotkey-overlay.title = "Run an Application: fuzzel";
-      action.spawn = "fuzzel";
+      hotkey-overlay.title = "Toggle Vicinae";
+      action.spawn = [
+        "vicinae"
+        "toggle"
+      ];
     };
     "Super+Alt+L" = {
       hotkey-overlay.title = "Lock the Screen: swaylock";

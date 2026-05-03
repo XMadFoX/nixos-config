@@ -2,9 +2,13 @@
   description = "Nixos config flake";
 
   nixConfig = {
-    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-substituters = [
+      "https://noctalia.cachix.org"
+      "https://vicinae.cachix.org"
+    ];
     extra-trusted-public-keys = [
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
     ];
   };
 
@@ -53,6 +57,7 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vicinae.url = "github:vicinaehq/vicinae";
 
     niri-src = {
       url = "github:niri-wm/niri/v26.04";
@@ -133,8 +138,14 @@
           mango.nixosModules.mango
           {
             nix.settings = {
-              substituters = [ "https://niri.cachix.org" ];
-              trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+              substituters = [
+                "https://niri.cachix.org"
+                "https://vicinae.cachix.org"
+              ];
+              trusted-public-keys = [
+                "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+                "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+              ];
             };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -142,6 +153,7 @@
             home-manager.users.madfox = {
               imports = [
                 inputs.hyprland.homeManagerModules.default
+                inputs.vicinae.homeManagerModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
@@ -210,8 +222,14 @@
           mango.nixosModules.mango
           {
             nix.settings = {
-              substituters = [ "https://niri.cachix.org" ];
-              trusted-public-keys = [ "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=" ];
+              substituters = [
+                "https://niri.cachix.org"
+                "https://vicinae.cachix.org"
+              ];
+              trusted-public-keys = [
+                "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+                "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+              ];
             };
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -219,6 +237,7 @@
             home-manager.users.madfox = {
               imports = [
                 inputs.hyprland.homeManagerModules.default
+                inputs.vicinae.homeManagerModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango

@@ -64,6 +64,17 @@
     tray = true;
   };
 
+  services.vicinae = {
+    enable = true;
+    systemd = {
+      enable = true;
+      autoStart = true;
+      environment = {
+        USE_LAYER_SHELL = 1;
+      };
+    };
+  };
+
   imports = [
     ./hyprland.nix
     ./noctalia.nix
