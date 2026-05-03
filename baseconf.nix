@@ -155,7 +155,6 @@
         wofi # Launcher for Wayland
         wofi-emoji
         fuzzel # like rofi & dmenu, but fuzzy :3
-        vicinae # modern raycast-like launcher
         wlr-randr # Display configuration tool for Wayland
         wlogout # Logout menu for Wayland
         wl-clipboard

@@ -47,6 +47,18 @@ in
           avatarImage = "/home/madfox/.face";
           radiusRatio = 0.4;
         };
+        dock = {
+          enabled = false;
+          showLauncherIcon = false;
+        };
+        appLauncher = {
+          # Noctalia has no top-level appLauncher.enabled option in this flake;
+          # keep every optional launcher integration/search provider off.
+          enableClipboardHistory = false;
+          enableSettingsSearch = false;
+          enableWindowsSearch = false;
+          enableSessionSearch = false;
+        };
         location = {
           monthBeforeDay = false;
           name = "Tbilisi, Georgia";
