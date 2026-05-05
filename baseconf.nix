@@ -1,12 +1,22 @@
 {
+  config,
   pkgs,
   lib,
   inputs,
   ...
 }:
+let
+  nvidiaEnabled = config.hardware.nvidia.enable;
+in
 {
   imports = [
     ./codename.nix
+    (
+      { lib, ... }:
+      {
+        options.hardware.nvidia.enable = lib.mkEnableOption "NVIDIA GPU-specific package set";
+      }
+    )
   ];
 
   nix = {
@@ -258,7 +268,7 @@
         cloudflared
         hunspellDicts.en_US
         hunspell
-        android-tools #adb
+        android-tools # adb
       ];
       virtPkgs = [
         dive
@@ -268,9 +278,9 @@
         gnupg
         docker
         docker-credential-helpers
-        nvidia-container-toolkit
         pass
-      ];
+      ]
+      ++ lib.optionals nvidiaEnabled [ nvidia-container-toolkit ];
       vpnPkgs = [
         cloudflare-warp # Cloudflare's VPN service
         protonvpn-gui # ProtonVPN desktop client
@@ -300,9 +310,19 @@
         wezterm
         ghostty
       ];
+      gpuMonitorPkgs =
+        if nvidiaEnabled then
+          [
+            btop-cuda
+            nvtopPackages.nvidia
+          ]
+        else
+          [
+            btop
+          ];
+
       basePkgs = [
         nano # beginner friendly editor
-        btop
         nh
         nvd
         nix-output-monitor
@@ -414,6 +434,7 @@
     ++ virtPkgs
     ++ vpnPkgs
     ++ basePkgs
+    ++ gpuMonitorPkgs
     ++ guiPkgs
     ++ mediaPkgs
     ++ chatPkgs
