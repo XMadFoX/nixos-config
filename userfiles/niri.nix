@@ -123,6 +123,7 @@ in
     { argv = [ "easyeffects" ]; }
     { argv = [ "blueman-manager" ]; }
     { argv = [ "pwvucontrol" ]; }
+    { argv = [ "nsticky" ]; }
   ];
 
   window-rules = [
@@ -241,6 +242,14 @@ in
     "Mod+Shift+P" = {
       allow-when-locked = true;
       action.spawn-sh = "playerctl play-pause";
+    };
+    "Mod+Ctrl+P" = {
+      hotkey-overlay.title = "Toggle Sticky Window: nsticky";
+      action.spawn = [
+        "nsticky"
+        "sticky"
+        "toggle-active"
+      ];
     };
 
     "Mod+Shift+N".action.spawn-sh = "swaync-client -t -sw";

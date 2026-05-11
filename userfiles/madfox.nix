@@ -9,6 +9,9 @@
 {
   home.username = "madfox";
   home.homeDirectory = "/home/madfox";
+  home.packages = [
+    inputs.nsticky.packages.${pkgs.system}.nsticky
+  ];
 
   # Let home Manager install and manage itself.
   #programs.home-manager.enable = true;

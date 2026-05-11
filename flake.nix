@@ -58,6 +58,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vicinae.url = "github:vicinaehq/vicinae";
+    nsticky = {
+      url = "github:lonerOrz/nsticky";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     niri-src = {
       url = "github:niri-wm/niri/v26.04";
@@ -103,6 +107,7 @@
           pi-coding-agent = pkgs.pi-coding-agent;
           llama-cpp-turboquant = pkgs.llama-cpp-turboquant;
           llama-cpp-turboquant-cuda = pkgs.llama-cpp-turboquant-cuda;
+          nsticky = inputs.nsticky.packages.${system}.nsticky;
         }
       );
 
