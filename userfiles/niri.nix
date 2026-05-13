@@ -379,6 +379,10 @@ in
 
     "Mod+C".action.center-column = [ ];
     "Mod+Ctrl+C".action.center-visible-columns = [ ];
+    "Mod+Shift+C" = {
+      hotkey-overlay.title = "Pick Color: hyprpicker";
+      action.spawn-sh = "hyprpicker | wl-copy";
+    };
 
     "Mod+Minus".action.set-column-width = "-10%";
     "Mod+Equal".action.set-column-width = "+10%";
