@@ -23,7 +23,7 @@
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "ntsync" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
