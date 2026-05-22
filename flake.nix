@@ -62,6 +62,10 @@
       url = "github:lonerOrz/nsticky";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    handy = {
+      url = "github:cjpais/handy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     niri-src = {
       url = "github:niri-wm/niri/v26.04";
@@ -137,6 +141,7 @@
           }
 
           inputs.niri.nixosModules.niri
+          inputs.handy.nixosModules.default
 
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
@@ -159,6 +164,7 @@
               imports = [
                 inputs.hyprland.homeManagerModules.default
                 inputs.vicinae.homeManagerModules.default
+                inputs.handy.homeManagerModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
@@ -167,6 +173,9 @@
               ];
             };
             home-manager.backupFileExtension = "backup";
+
+            programs.handy.enable = true;
+            users.users.madfox.extraGroups = [ "input" ];
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
           }
@@ -199,6 +208,7 @@
           }
 
           inputs.niri.nixosModules.niri
+          inputs.handy.nixosModules.default
 
           ./hosts/gvino/configuration.nix
           home-manager.nixosModules.home-manager
@@ -243,6 +253,7 @@
               imports = [
                 inputs.hyprland.homeManagerModules.default
                 inputs.vicinae.homeManagerModules.default
+                inputs.handy.homeManagerModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
@@ -251,6 +262,9 @@
               ];
             };
             home-manager.backupFileExtension = "backup";
+
+            programs.handy.enable = true;
+            users.users.madfox.extraGroups = [ "input" ];
           }
         ];
       };

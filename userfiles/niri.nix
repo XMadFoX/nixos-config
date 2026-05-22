@@ -196,6 +196,13 @@ in
         "toggle"
       ];
     };
+    "Mod+W" = {
+      hotkey-overlay.title = "Toggle Handy Recording";
+      action.spawn = [
+        "handy"
+        "--toggle-transcription"
+      ];
+    };
     "Super+Alt+L" = {
       hotkey-overlay.title = "Lock the Screen: swaylock";
       action.spawn = "swaylock";

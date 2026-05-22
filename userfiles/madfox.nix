@@ -78,6 +78,8 @@
     };
   };
 
+  services.handy.enable = true;
+
   imports = [
     ./hyprland.nix
     ./noctalia.nix
