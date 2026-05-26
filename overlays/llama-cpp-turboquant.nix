@@ -1,15 +1,15 @@
 final: prev:
 let
-  rev = "1073622985bb68075472474b4b0fdfcdabcfc9d0";
+  rev = "2cbfdc62a1a047b01377948dfdede8cb6a744866";
 
   forkedLlamaCpp = prev.llama-cpp.overrideAttrs (_old: {
-    version = "1073622";
+    version = "9418";
 
     src = prev.fetchFromGitHub {
       owner = "TheTom";
       repo = "llama-cpp-turboquant";
       inherit rev;
-      hash = "sha256-ruXvhD/kvcckZBNTuTcx9Kg6PW5l4lerPcmtP4GeF4k=";
+      hash = "sha256-tXwxGskE8Ao7oozPFhWYPFIUnMN2DC2Q3G29INoVvR8=";
       leaveDotGit = true;
       postFetch = ''
         git -C "$out" rev-parse --short HEAD > $out/COMMIT
@@ -17,7 +17,8 @@ let
       '';
     };
 
-    npmDepsHash = "sha256-RAFtsbBGBjteCt5yXhrmHL39rIDJMCFBETgzId2eRRk=";
+    npmRoot = "tools/ui";
+    npmDepsHash = "sha256-WaEePrEZ7O/7deP2KJhe0AwiSKYA8HOqETmMHUkmBe0=";
 
     postPatch = ''
       rm -f tools/server/public/index.html.gz
