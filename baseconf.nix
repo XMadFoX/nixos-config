@@ -382,12 +382,17 @@ in
       ];
       # Programming languages
       progPkgs = [
+        rtk # common programs proxy to reduce noisy output and make it more compact
         python3 # Python 3
         lua5_4_compat # Lua 5.4
         lua54Packages.luarocks-nix # Lua package manager
         gcc
         redis # for cli only, i swear
         fuse-overlayfs
+        # common fallbacks
+        bun
+        pnpm
+        nodejs_24
       ];
       # minimal set of gui applications
       guiPkgs = [
