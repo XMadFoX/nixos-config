@@ -158,6 +158,45 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    openFirewall = true;
+    # Keep this false for NVENC: the capability wrapper makes the dynamic loader
+    # ignore LD_LIBRARY_PATH, so FFmpeg cannot dlopen libnvidia-encode.so.1.
+    # Wayland screencopy does not need CAP_SYS_ADMIN.
+    capSysAdmin = false;
+    package = pkgs.sunshine.override {
+      cudaSupport = true;
+      cudaPackages = pkgs.cudaPackages;
+    };
+    settings = {
+      # Stream only this connector; keep DP-1 usable locally.
+      # Sunshine wants the monitor id here; startup logs show HDMI-A-1 as monitor 1.
+      output_name = "1";
+
+      # Use NVIDIA NVENC on the host instead of CPU/software encoding.
+      encoder = "nvenc";
+    };
+  };
+
+  # Make NVIDIA driver libraries visible to Sunshine's user service for NVENC/CUDA.
+  systemd.user.services.sunshine.serviceConfig.Environment = "LD_LIBRARY_PATH=/run/opengl-driver/lib";
+
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+    overrideFolders = false;
+    user = "madfox";
+    settings = {
+      devices = {
+        "rp12" = {
+          id = "OIL6HGH-W5G6VJY-VX7H5HJ-J6O27VB-P2WCNEM-KW4Y5SZ-JB6AYVT-PZOLAQT";
+        };
+      };
+    };
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.madfox = {
     isNormalUser = true;
@@ -168,6 +207,9 @@
       "dialout"
       "docker"
       "adbusers"
+      "video"
+      "render"
+      "input"
     ];
     packages = with pkgs; [
       kdePackages.kate
