@@ -9,9 +9,19 @@
 {
   home.username = "madfox";
   home.homeDirectory = "/home/madfox";
-  home.packages = [
-    inputs.nsticky.packages.${pkgs.system}.nsticky
-  ];
+  home.packages = [ ];
+
+  programs.nsticky = {
+    enable = true;
+    settings = {
+      sticky = {
+        zen-beta-pip = {
+          app-id = "zen-beta";
+          title = "^Picture-in-Picture$";
+        };
+      };
+    };
+  };
 
   # Let home Manager install and manage itself.
   #programs.home-manager.enable = true;

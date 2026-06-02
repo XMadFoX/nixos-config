@@ -165,6 +165,7 @@
                 inputs.hyprland.homeManagerModules.default
                 inputs.vicinae.homeManagerModules.default
                 inputs.handy.homeManagerModules.default
+                inputs.nsticky.homeModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
@@ -254,6 +255,7 @@
                 inputs.hyprland.homeManagerModules.default
                 inputs.vicinae.homeManagerModules.default
                 inputs.handy.homeManagerModules.default
+                inputs.nsticky.homeModules.default
                 ./userfiles/madfox.nix
                 catppuccin.homeModules.catppuccin
                 mango.hmModules.mango
