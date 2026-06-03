@@ -3,10 +3,12 @@
 
   nixConfig = {
     extra-substituters = [
+      "https://cache.numtide.com"
       "https://noctalia.cachix.org"
       "https://vicinae.cachix.org"
     ];
     extra-trusted-public-keys = [
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
       "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
     ];
@@ -66,6 +68,7 @@
       url = "github:cjpais/handy";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    llm-agents.url = "github:numtide/llm-agents.nix";
 
     niri-src = {
       url = "github:niri-wm/niri/v26.04";
@@ -136,6 +139,7 @@
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
               (import ./overlays/openldap.nix)
+              inputs.llm-agents.overlays.default
               # (import ./overlays/ollama.nix)
             ];
           }
@@ -146,40 +150,50 @@
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
           mango.nixosModules.mango
-          {
-            nix.settings = {
-              substituters = [
-                "https://niri.cachix.org"
-                "https://vicinae.cachix.org"
+          (
+            { pkgs, ... }:
+            {
+              environment.systemPackages = [
+                pkgs.llm-agents.beads
+                pkgs.llm-agents.beads-viewer
+                pkgs.llm-agents.herdr
               ];
-              trusted-public-keys = [
-                "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-                "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
-              ];
-            };
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.madfox = {
-              imports = [
-                inputs.hyprland.homeManagerModules.default
-                inputs.vicinae.homeManagerModules.default
-                inputs.handy.homeManagerModules.default
-                inputs.nsticky.homeModules.default
-                ./userfiles/madfox.nix
-                catppuccin.homeModules.catppuccin
-                mango.hmModules.mango
-                inputs.dms.homeModules.dank-material-shell
-                inputs.noctalia.homeModules.default
-              ];
-            };
-            home-manager.backupFileExtension = "backup";
+              nix.settings = {
+                substituters = [
+                  "https://cache.numtide.com"
+                  "https://niri.cachix.org"
+                  "https://vicinae.cachix.org"
+                ];
+                trusted-public-keys = [
+                  "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+                  "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+                  "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+                ];
+              };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.madfox = {
+                imports = [
+                  inputs.hyprland.homeManagerModules.default
+                  inputs.vicinae.homeManagerModules.default
+                  inputs.handy.homeManagerModules.default
+                  inputs.nsticky.homeModules.default
+                  ./userfiles/madfox.nix
+                  catppuccin.homeModules.catppuccin
+                  mango.hmModules.mango
+                  inputs.dms.homeModules.dank-material-shell
+                  inputs.noctalia.homeModules.default
+                ];
+              };
+              home-manager.backupFileExtension = "backup";
 
-            programs.handy.enable = true;
-            users.users.madfox.extraGroups = [ "input" ];
+              programs.handy.enable = true;
+              users.users.madfox.extraGroups = [ "input" ];
 
-            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-          }
+              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+            }
+          )
         ];
       };
       nixosConfigurations.gvino = nixpkgs.lib.nixosSystem {
@@ -203,6 +217,7 @@
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
               (import ./overlays/openldap.nix)
+              inputs.llm-agents.overlays.default
               # (import ./overlays/ollama.nix)
               (import ./overlays/opencode.nix { inherit master; })
             ];
@@ -236,38 +251,48 @@
             }
           )
           mango.nixosModules.mango
-          {
-            nix.settings = {
-              substituters = [
-                "https://niri.cachix.org"
-                "https://vicinae.cachix.org"
+          (
+            { pkgs, ... }:
+            {
+              environment.systemPackages = [
+                pkgs.llm-agents.beads
+                pkgs.llm-agents.beads-viewer
+                pkgs.llm-agents.herdr
               ];
-              trusted-public-keys = [
-                "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-                "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
-              ];
-            };
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.madfox = {
-              imports = [
-                inputs.hyprland.homeManagerModules.default
-                inputs.vicinae.homeManagerModules.default
-                inputs.handy.homeManagerModules.default
-                inputs.nsticky.homeModules.default
-                ./userfiles/madfox.nix
-                catppuccin.homeModules.catppuccin
-                mango.hmModules.mango
-                inputs.dms.homeModules.dank-material-shell
-                inputs.noctalia.homeModules.default
-              ];
-            };
-            home-manager.backupFileExtension = "backup";
+              nix.settings = {
+                substituters = [
+                  "https://cache.numtide.com"
+                  "https://niri.cachix.org"
+                  "https://vicinae.cachix.org"
+                ];
+                trusted-public-keys = [
+                  "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+                  "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+                  "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+                ];
+              };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.madfox = {
+                imports = [
+                  inputs.hyprland.homeManagerModules.default
+                  inputs.vicinae.homeManagerModules.default
+                  inputs.handy.homeManagerModules.default
+                  inputs.nsticky.homeModules.default
+                  ./userfiles/madfox.nix
+                  catppuccin.homeModules.catppuccin
+                  mango.hmModules.mango
+                  inputs.dms.homeModules.dank-material-shell
+                  inputs.noctalia.homeModules.default
+                ];
+              };
+              home-manager.backupFileExtension = "backup";
 
-            programs.handy.enable = true;
-            users.users.madfox.extraGroups = [ "input" ];
-          }
+              programs.handy.enable = true;
+              users.users.madfox.extraGroups = [ "input" ];
+            }
+          )
         ];
       };
     };
