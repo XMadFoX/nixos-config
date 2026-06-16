@@ -53,10 +53,20 @@ in
   };
 
   outputs = {
-    "DP-1".mode = {
-      width = 3440;
+    "DP-1" = {
+      focus-at-startup = true;
+      variable-refresh-rate = false; # flicking :( maybe min hz will be implemented some time
+      mode = {
+        width = 3440;
+        height = 1440;
+        refresh = 144.0;
+      };
+    };
+
+    "HDMI-A-1".mode = {
+      width = 2560;
       height = 1440;
-      refresh = 144.0;
+      refresh = 59.951000;
     };
 
     "eDP-1" = {
@@ -70,17 +80,50 @@ in
   };
 
   workspaces = {
-    "00-special".name = "special";
-    "01-msg".name = "msg";
-    "02-w1".name = "w1";
-    "03-w2".name = "w2";
-    "04-w3".name = "w3";
-    "05-w4".name = "w4";
-    "06-w5".name = "w5";
-    "07-w6".name = "w6";
-    "08-w7".name = "w7";
-    "09-w8".name = "w8";
-    "10-w9".name = "w9";
+    "00-special" = {
+      name = "special";
+      open-on-output = "DP-1";
+    };
+    "01-msg" = {
+      name = "msg";
+      open-on-output = "DP-1";
+    };
+    "02-w1" = {
+      name = "w1";
+      open-on-output = "DP-1";
+    };
+    "03-w2" = {
+      name = "w2";
+      open-on-output = "DP-1";
+    };
+    "04-w3" = {
+      name = "w3";
+      open-on-output = "DP-1";
+    };
+    "05-w4" = {
+      name = "w4";
+      open-on-output = "DP-1";
+    };
+    "06-w5" = {
+      name = "w5";
+      open-on-output = "DP-1";
+    };
+    "07-w6" = {
+      name = "w6";
+      open-on-output = "DP-1";
+    };
+    "08-w7" = {
+      name = "w7";
+      open-on-output = "DP-1";
+    };
+    "09-w8" = {
+      name = "w8";
+      open-on-output = "DP-1";
+    };
+    "10-w9" = {
+      name = "w9";
+      open-on-output = "DP-1";
+    };
   };
 
   layout = {
@@ -128,9 +171,18 @@ in
   window-rules = [
     {
       matches = [
-        { at-startup = true; app-id = "^com\\.github\\.wwmm\\.easyeffects$"; }
-        { at-startup = true; app-id = "^\\.blueman-manager-wrapped$"; }
-        { at-startup = true; app-id = "^com\\.saivert\\.pwvucontrol$"; }
+        {
+          at-startup = true;
+          app-id = "^com\\.github\\.wwmm\\.easyeffects$";
+        }
+        {
+          at-startup = true;
+          app-id = "^\\.blueman-manager-wrapped$";
+        }
+        {
+          at-startup = true;
+          app-id = "^com\\.saivert\\.pwvucontrol$";
+        }
       ];
       open-on-workspace = "special";
     }
@@ -262,11 +314,21 @@ in
 
     "XF86MonBrightnessUp" = {
       allow-when-locked = true;
-      action.spawn = [ "brightnessctl" "--class=backlight" "set" "+10%" ];
+      action.spawn = [
+        "brightnessctl"
+        "--class=backlight"
+        "set"
+        "+10%"
+      ];
     };
     "XF86MonBrightnessDown" = {
       allow-when-locked = true;
-      action.spawn = [ "brightnessctl" "--class=backlight" "set" "10%-" ];
+      action.spawn = [
+        "brightnessctl"
+        "--class=backlight"
+        "set"
+        "10%-"
+      ];
     };
 
     "Mod+O".action.toggle-overview = [ ];
