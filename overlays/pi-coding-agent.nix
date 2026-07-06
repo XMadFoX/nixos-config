@@ -1,13 +1,13 @@
 final: prev:
 let
-  version = "0.79.9";
+  version = "0.80.3";
   src = prev.fetchFromGitHub {
     owner = "earendil-works";
     repo = "pi";
     rev = "v${version}";
-    hash = "sha256-+h1D51JM4F2iHCzTA57A5/uAzHQBKSlz/7x3/PtQhec=";
+    hash = "sha256-wQTrWKsb2HCGwzSAFEk8NWSDpqxSY/lv1/R6ghcmbaA=";
   };
-  npmDepsHash = "sha256-uej0uXVbihmxpuvviCK/5JFSEqDamIW5ETOL/ZKW45g=";
+  npmDepsHash = "sha256-geh8LH88OZybFXkR/jDeTdew6TNMdFM6jhCSYKn//dU=";
 in
 {
   pi-coding-agent = prev.pi-coding-agent.overrideAttrs (old: {
