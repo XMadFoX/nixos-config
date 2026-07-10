@@ -3,83 +3,64 @@
 let
   isTsiteli = osConfig.networking.hostName == "tsiteli";
 
-  rightWidgets = [
-    { id = "Network"; }
-    { id = "Bluetooth"; }
-    { id = "SystemMonitor"; }
-    {
-      id = "ControlCenter";
-      useDistroLogo = true;
-    }
+  # Bar widgets shown on the right/end section (v5 widget IDs).
+  endWidgets = [
+    "network"
+    "bluetooth"
+    "cpu"
+    "ram"
+    "control-center"
   ];
 in
 {
-  programs.noctalia-shell = {
+  # v5 module namespace (was programs.noctalia-shell in v4).
+  programs.noctalia = {
     enable = true;
+
+    # settings is now a TOML attrset (snake_case keys); see
+    # https://docs.noctalia.dev/v5/configuration/
     settings = lib.mkMerge [
       {
-        bar = {
-          density = "compact";
+        shell = {
+          # Was general.avatarImage / general.radiusRatio in v4.
+          avatar_path = "/home/madfox/.face";
+          corner_radius_scale = 0.8;
+          # Was appLauncher.enableClipboardHistory = false in v4.
+          clipboard_enabled = false;
+        };
+
+        bar.main = {
           position = "top";
-          widgets = {
-            left = [
-              {
-                id = "Workspace";
-                hideUnoccupied = false;
-                labelMode = "none";
-              }
-              { id = "ActiveWindow"; }
-            ];
-            center = [
-              {
-                id = "Clock";
-                formatHorizontal = "HH:mm";
-                useMonospacedFont = true;
-                usePrimaryColor = true;
-              }
-              { id = "Volume"; }
-            ];
-            right = rightWidgets;
-          };
+          thickness = 30;
+          start = [
+            "workspaces"
+            "active_window"
+          ];
+          center = [
+            "clock"
+            "volume"
+          ];
+          end = endWidgets;
         };
-        # colorSchemes.predefinedScheme = "";
-        general = {
-          avatarImage = "/home/madfox/.face";
-          radiusRatio = 0.4;
+
+        # Date/time formatting tokens (was location.monthBeforeDay in v4).
+        location = {
+          address = "Tbilisi, Georgia";
         };
+
         dock = {
           enabled = false;
-          showLauncherIcon = false;
+          launcher_position = "none";
         };
-        appLauncher = {
-          # Noctalia has no top-level appLauncher.enabled option in this flake;
-          # keep every optional launcher integration/search provider off.
-          enableClipboardHistory = false;
-          enableSettingsSearch = false;
-          enableWindowsSearch = false;
-          enableSessionSearch = false;
-        };
-        location = {
-          monthBeforeDay = false;
-          name = "Tbilisi, Georgia";
-        };
+
         wallpaper = {
-          # managed externaly, dont let noctalia override
+          # managed externally, dont let noctalia override
           enabled = false;
         };
       }
 
       (lib.mkIf isTsiteli {
-        bar.widgets.right = lib.mkForce (
-          [
-            {
-              id = "Battery";
-              alwaysShowPercentage = false;
-              warningThreshold = 30;
-            }
-          ]
-          ++ rightWidgets
-        );
+        bar.main.end = lib.mkForce ([ "battery" ] ++ endWidgets);
       })
     ];
   };

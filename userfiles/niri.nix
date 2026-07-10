@@ -160,7 +160,7 @@ in
   };
 
   spawn-at-startup = [
-    { argv = [ "noctalia-shell" ]; }
+    { argv = [ "noctalia" ]; }
     { argv = [ "xwayland-satellite" ]; }
     { argv = [ "swaync" ]; }
     { argv = [ "easyeffects" ]; }
