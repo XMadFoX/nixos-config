@@ -160,7 +160,7 @@ in
         waybar # Highly customizable Wayland bar
         swaynotificationcenter # Notification daemon for Wayland
         libnotify # Send desktop notifications
-        swww # Wallpaper daemon for Wayland
+        awww # Wallpaper daemon for Wayland
         swaybg # Background setter for Wayland
         wofi # Launcher for Wayland
         wofi-emoji
@@ -209,7 +209,7 @@ in
         spotify # Music streaming service
         spotify-player # CLI Spotify client
         (ncspot.override {
-          withCover = true;
+          # withCover = true;
         })
         spotube # Open-source Spotify client
         vlc
@@ -256,11 +256,11 @@ in
         kubetui
         kubespy
         kubeconform
+        iotop
         pi-coding-agent
         zed-editor-fhs
         tokei # line count
         delta # git diff cli
-        dive # docker image analysis
         gitui # in rust
         psmisc # fuser
         cloudflared
@@ -269,7 +269,7 @@ in
         android-tools # adb
       ];
       virtPkgs = [
-        dive
+        dive # docker image analysis
         podman-tui
         podman-compose
         fuse-overlayfs
@@ -281,17 +281,17 @@ in
       ++ lib.optionals nvidiaEnabled [ nvidia-container-toolkit ];
       vpnPkgs = [
         cloudflare-warp # Cloudflare's VPN service
-        protonvpn-gui # ProtonVPN desktop client
+        proton-vpn # ProtonVPN desktop client
         haguichi
       ];
       gamePkgs = [
         lutris # Linux game platform
-        bottles # Open-source game launcher
+        # bottles # Open-source game launcher
         protonup-qt # Proton compatibility tool updater
         winetricks # Windows software installation helper
-        # wineWowPackages.stable # Windows compatibility layer
-        # wineWowPackages.waylandFull # Wayland-compatible Wine
-        wine64Packages.waylandFull
+        wineWowPackages.stable # Windows compatibility layer
+        wineWowPackages.waylandFull # Wayland-compatible Wine
+        # wine64Packages.waylandFull
         hydralauncher
         steam-run
         gamescope
@@ -330,12 +330,14 @@ in
         wirelesstools # iwlist (wifi scan)
         gitFull # git with send-email
         git-town
+        worktrunk # worktree tools
         glab
         qbittorrent
         curl # transfer data to/from a URL
         binutils # debugging binary files
         dos2unix # text file conversion
         file # file information
+        pandoc # converter
         htop # top replacement
         ncdu # disk size checker
         nmap # stats about clients in the network
@@ -358,7 +360,7 @@ in
         rust-analyzer # Rust language server
         gh # github cli
         inotify-tools # file system event monitoring
-        nixfmt-rfc-style
+        nixfmt
         syncthing # Continuous file synchronization
         pciutils # various utils for pci stuff; common for distros
         home-manager
@@ -407,14 +409,16 @@ in
       # FOSS based chat apps
       minecraft = [
         prismlauncher
-        badlion-client
         lunar-client
         zulu # 21
+        zulu21
         zulu8
         zulu17
         jre17_minimal
         # graalvmPackages.graalvm-oracle_17
         temurin-jre-bin-17
+        temurin-jre-bin-21
+      ];
       llmAgentsPkgs = [
         llm-agents.beads
         llm-agents.beads-viewer
