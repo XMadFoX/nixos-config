@@ -97,19 +97,16 @@
       packages = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (
         system:
         let
-          opencodeOverlay = import ./overlays/opencode.nix { inherit master; };
           pkgs = import nixpkgs {
             inherit system;
             overlays = [
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
-              opencodeOverlay
             ];
           };
         in
         {
-          opencode = pkgs.opencode;
           pi-coding-agent = pkgs.pi-coding-agent;
           llama-cpp-turboquant = pkgs.llama-cpp-turboquant;
           llama-cpp-turboquant-cuda = pkgs.llama-cpp-turboquant-cuda;
@@ -152,11 +149,6 @@
           (
             { pkgs, ... }:
             {
-              environment.systemPackages = [
-                pkgs.llm-agents.beads
-                pkgs.llm-agents.beads-viewer
-                pkgs.llm-agents.herdr
-              ];
               nix.settings = {
                 substituters = [
                   "https://cache.numtide.com"
@@ -217,8 +209,6 @@
               (import ./overlays/pi-coding-agent.nix)
               (import ./overlays/openldap.nix)
               inputs.llm-agents.overlays.default
-              # (import ./overlays/ollama.nix)
-              (import ./overlays/opencode.nix { inherit master; })
             ];
           }
 
@@ -253,11 +243,6 @@
           (
             { pkgs, ... }:
             {
-              environment.systemPackages = [
-                pkgs.llm-agents.beads
-                pkgs.llm-agents.beads-viewer
-                pkgs.llm-agents.herdr
-              ];
               nix.settings = {
                 substituters = [
                   "https://cache.numtide.com"

@@ -256,8 +256,6 @@ in
         kubetui
         kubespy
         kubeconform
-        gemini-cli
-        opencode
         pi-coding-agent
         zed-editor-fhs
         tokei # line count
@@ -417,6 +415,18 @@ in
         jre17_minimal
         # graalvmPackages.graalvm-oracle_17
         temurin-jre-bin-17
+      llmAgentsPkgs = [
+        llm-agents.beads
+        llm-agents.beads-viewer
+        llm-agents.beads-rust
+        llm-agents.mardi-gras
+        llm-agents.herdr
+        llm-agents.agent-deck
+        llm-agents.agentsview # usage
+        llm-agents.ccusage # usage
+        llm-agents.claude-code
+        llm-agents.opencode
+        llm-agents.antigravity-cli
       ];
       # Chat apps with proprietary components
       chatPkgs = [
@@ -445,6 +455,7 @@ in
     ++ chatPkgs
     ++ progPkgs
     ++ zuzeRicePkgs
+    ++ llmAgentsPkgs
     ++ minecraft;
 
   programs = {
