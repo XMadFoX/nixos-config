@@ -6,10 +6,25 @@
   inputs,
   ...
 }:
+let
+  # Neovim built from the nvf flake in ~/nix/nvf (provides bin/nvim).
+  nvfNeovim = inputs.mynvim.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+  # Always reachable as `nvf`, no matter which build owns `nvim`.
+  nvfAlias = pkgs.runCommandLocal "nvf-alias" { } ''
+    mkdir -p $out/bin
+    ln -s ${nvfNeovim}/bin/nvim $out/bin/nvf
+  '';
+
+  # Flip to true to make nvf the default `nvim`.
+  # Home packages (/etc/profiles/per-user/madfox/bin) shadow the system
+  # neovim, which stays reachable at /run/current-system/sw/bin/nvim.
+  nvfIsDefault = false;
+in
 {
   home.username = "madfox";
   home.homeDirectory = "/home/madfox";
-  home.packages = [ ];
+  home.packages = [ nvfAlias ] ++ lib.optional nvfIsDefault nvfNeovim;
 
   programs.nsticky = {
     enable = true;
@@ -52,10 +67,6 @@
 
   wayland.windowManager.mango = {
     enable = true;
-    package = pkgs.callPackage "${inputs.mango}/nix" {
-      scenefx = pkgs.scenefx;
-      "libxcb-wm" = pkgs.libxcb-wm;
-    };
   };
 
   programs.dank-material-shell = {
@@ -95,7 +106,8 @@
     ./noctalia.nix
   ];
 
-  xdg.configFile."uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
+  xdg.configFile."uwsm/env".source =
+    "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
 
   programs = {
     zoxide.enable = true;

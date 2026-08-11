@@ -54,6 +54,7 @@ in
   nixpkgs.config.permittedInsecurePackages = [
     "beekeeper-studio-5.5.5"
     "electron-27.3.11" # for logseq
+    "electron-39.8.10"
   ];
 
   boot = {
@@ -172,6 +173,8 @@ in
         ksnip # Screenshot and annotation tool
         grimblast # Screenshot tool for Wayland
         sway-contrib.grimshot # Screenshot tool
+        wtype
+        dotool
         grimblast
         hyprlock
         hyprpicker
@@ -382,7 +385,7 @@ in
       ];
       # Programming languages
       progPkgs = [
-        rtk # common programs proxy to reduce noisy output and make it more compact
+        inputs.master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.rtk # common programs proxy to reduce noisy output and make it more compact
         python3 # Python 3
         lua5_4_compat # Lua 5.4
         lua54Packages.luarocks-nix # Lua package manager
@@ -396,7 +399,7 @@ in
       ];
       # minimal set of gui applications
       guiPkgs = [
-        gtklp # CUPS gui
+        system-config-printer # CUPS gui (gtklp was removed: GTK2)
         dmenu # minimal launcher
         crosspipe # PipeWire patchbay
         easyeffects # pipewire sound tuner
@@ -525,6 +528,10 @@ in
     };
     # default touchpad support
     libinput.enable = true;
+
+    # Used by shells/desktop components for power/battery status.
+    upower.enable = true;
+    power-profiles-daemon.enable = lib.mkDefault true;
 
     openssh = {
       enable = true;

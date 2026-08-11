@@ -173,7 +173,7 @@
     settings = {
       # Stream only this connector; keep DP-1 usable locally.
       # Sunshine wants the monitor id here; startup logs show HDMI-A-1 as monitor 1.
-      output_name = "1";
+      output_name = "0";
 
       # Use NVIDIA NVENC on the host instead of CPU/software encoding.
       encoder = "nvenc";
@@ -207,6 +207,7 @@
       "dialout"
       "docker"
       "adbusers"
+      "kvm"
       "video"
       "render"
       "input"

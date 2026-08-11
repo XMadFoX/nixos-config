@@ -46,9 +46,15 @@
       # to have it up-to-date or simply don't specify the nixpkgs input
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Linux-only system list. Several inputs default to nix-systems/default
+    # (which includes x86_64-darwin); nixpkgs 26.11 dropped x86_64-darwin, so
+    # any flake-parts/treefmt transposition over that list fails to evaluate.
+    systems.url = "github:nix-systems/default-linux/31732fcf5e8fea42e59c2488ad31a0e651500f68";
+
     helium = {
       url = "github:schembriaiden/helium-browser-nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.inputs.systems.follows = "systems";
     };
     mango.url = "github:DreamMaoMao/mango";
     dms = {
@@ -58,7 +64,10 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
-    vicinae.url = "github:vicinaehq/vicinae";
+    vicinae = {
+      url = "github:vicinaehq/vicinae";
+      inputs.systems.follows = "systems";
+    };
     nsticky = {
       url = "github:lonerOrz/nsticky";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -66,8 +75,21 @@
     handy = {
       url = "github:cjpais/handy";
       inputs.nixpkgs.follows = "nixpkgs";
+      # bun2nix is flake-parts based and would evaluate treefmt for darwin
+      inputs.bun2nix.inputs.systems.follows = "systems";
     };
-    llm-agents.url = "github:numtide/llm-agents.nix";
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.systems.follows = "systems";
+    };
+
+    # Personal Neovim config built with nvf, living in ~/nix/nvf.
+    # git+file: only sees *committed* content, so commit there and run
+    # `nix flake update mynvim` here before rebuilding.
+    mynvim = {
+      url = "git+file:///home/madfox/nix/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     niri-src = {
       url = "github:niri-wm/niri/v26.04";
@@ -208,7 +230,7 @@
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
               (import ./overlays/openldap.nix)
-              inputs.llm-agents.overlays.default
+              inputs.llm-agents.overlays.shared-nixpkgs
             ];
           }
 

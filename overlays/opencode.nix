@@ -29,11 +29,7 @@ in
           substituteInPlace packages/opencode/package.json \
             --replace-fail '"partial-json": "0.1.7",' $'"partial-json": "0.1.7",\n    "prettier": "3.6.2",'
         '';
-        outputHash =
-          if prev.stdenvNoCC.hostPlatform.isDarwin then
-            "sha256-KlE4U87sVWoB2eXngUU7w+Z3F7oqh3NPhoCRHQqQm1s="
-          else
-            "sha256-r0UCWhxIB4q4Te+LpXNcfexjfmI4Th2swfWOL3cUp3g=";
+        outputHash = "sha256-r0UCWhxIB4q4Te+LpXNcfexjfmI4Th2swfWOL3cUp3g=";
       });
     }
   );
