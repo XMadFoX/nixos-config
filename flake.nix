@@ -91,14 +91,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri-src = {
-      url = "github:niri-wm/niri/v26.04";
-      flake = false;
-    };
-    niri = {
-      url = "github:sodiboo/niri-flake/very-refactor";
-      inputs.niri-stable.follows = "niri-src";
-    };
+    # Settings/KDL module only. Compositor comes from nixpkgs (26.04, Hydra).
+    niri.url = "github:sodiboo/niri-flake/very-refactor";
   };
 
   outputs =
@@ -144,15 +138,6 @@
           catppuccin.nixosModules.catppuccin
           {
             nixpkgs.overlays = [
-              inputs.niri.overlays.niri
-              (final: prev: {
-                niri-stable = prev.niri-stable.overrideAttrs {
-                  postFixup = ''
-                    substituteInPlace $out/lib/systemd/user/niri.service \
-                      --replace-fail "ExecStart=niri" "ExecStart=$out/bin/niri"
-                  '';
-                };
-              })
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
@@ -217,15 +202,6 @@
           catppuccin.nixosModules.catppuccin
           {
             nixpkgs.overlays = [
-              inputs.niri.overlays.niri
-              (final: prev: {
-                niri-stable = prev.niri-stable.overrideAttrs {
-                  postFixup = ''
-                    substituteInPlace $out/lib/systemd/user/niri.service \
-                      --replace-fail "ExecStart=niri" "ExecStart=$out/bin/niri"
-                  '';
-                };
-              })
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
               (import ./overlays/pi-coding-agent.nix)
@@ -249,7 +225,7 @@
             {
               # takes care of setting up portals & other system services
               programs.niri.enable = true;
-              programs.niri.package = pkgs.niri-stable;
+              programs.niri.package = pkgs.niri;
 
               programs.uwsm = {
                 enable = true;

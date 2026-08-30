@@ -127,7 +127,6 @@ in
     nerd-fonts.caskaydia-cove
     nerd-fonts.fira-code
     font-awesome
-    tokyonight-gtk-theme
     catppuccin
     catppuccin-gtk
     catppuccin-qt5ct
@@ -270,6 +269,9 @@ in
         hunspellDicts.en_US
         hunspell
         android-tools # adb
+        glow # nice markdown rendering in shell
+        tuicr # tui for code reviews with vim keybindings
+        gh-dash # tui for github
       ];
       virtPkgs = [
         dive # docker image analysis
