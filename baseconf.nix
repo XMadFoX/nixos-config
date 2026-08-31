@@ -39,12 +39,23 @@ in
         "https://api.github.com/"
       ];
       substituters = [
+        "http://rpi5-2.hs.local:8080/nixos?priority=100"
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
         "https://hyprland.cachix.org"
+        "https://ai.cachix.org"
+        "https://noctalia.cachix.org"
       ];
-      trusted-substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+      trusted-substituters = [
+        "https://hyprland.cachix.org"
+        "https://noctalia.cachix.org"
+      ];
+      trusted-public-keys = [
+        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
+        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+        "nixos:GHyC7cZlnDApGlXe/KnG4oHSszdJ7Ew7ZXg9Gj/QyfA="
+      ];
     };
     distributedBuilds = true;
   };
