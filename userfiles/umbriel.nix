@@ -1,4 +1,19 @@
 { ... }:
+let
+  workspaceNames = [
+    "special"
+    "msg"
+    "w1"
+    "w2"
+    "w3"
+    "w4"
+    "w5"
+    "w6"
+    "w7"
+    "w8"
+    "w9"
+  ];
+in
 {
   programs.umbriel = {
     enable = true;
@@ -24,6 +39,7 @@
           numlock_toggle = true;
         };
         touchpad.tap = true;
+        touchpad.natural_scroll = false;
         mouse.sensitivity = 0.0;
         focus.follows_mouse = true;
         cursor.follows_focus = true;
@@ -31,7 +47,7 @@
 
       layout = {
         mode = "scrolling";
-        gap = 16;
+        gap = 8;
         width_presets = [
           0.33333
           0.5
@@ -46,6 +62,8 @@
       appearance = {
         prefer_no_csd = true;
         border_width = 4;
+        border_focused = "#ca9ee6";
+        border_unfocused = "#ca9ee655";
         corner_radius = 12;
         blur = {
           enabled = true;
@@ -66,24 +84,16 @@
         "DP-1" = {
           mode = "3440x1440@144";
           vrr = "disabled";
-          workspaces = [
-            "special"
-            "msg"
-            "w1"
-            "w2"
-            "w3"
-            "w4"
-            "w5"
-            "w6"
-            "w7"
-            "w8"
-            "w9"
-          ];
+          workspaces = workspaceNames;
         };
-        "HDMI-A-1".mode = "2560x1440@59.951";
+        "HDMI-A-1" = {
+          mode = "2560x1440@59.951";
+          workspaces = workspaceNames;
+        };
         "eDP-1" = {
           mode = "2560x1440@165.003";
           scale = 1.25;
+          workspaces = workspaceNames;
         };
       };
 
@@ -96,6 +106,9 @@
         "Mod+Shift+N" = "spawn:swaync-client -t -sw";
         "Mod+Shift+P" = "spawn:playerctl play-pause";
         "Mod+Ctrl+P" = "spawn:nsticky sticky toggle-active";
+
+
+        "Mod+Shift+S" = "noctalia msg screenshot-region";
 
         "XF86AudioRaiseVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
         "XF86AudioLowerVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
