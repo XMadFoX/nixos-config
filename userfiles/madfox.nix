@@ -102,8 +102,10 @@ in
   services.handy.enable = true;
 
   imports = [
+    inputs.umbriel.homeModules.default
     ./hyprland.nix
     ./noctalia.nix
+    ./umbriel.nix
   ];
 
   xdg.configFile."uwsm/env".source =

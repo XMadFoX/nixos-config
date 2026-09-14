@@ -64,6 +64,11 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
+    umbriel = {
+      # Umbriel vendors SceneFX as a submodule, so use the git fetcher.
+      url = "git+https://github.com/noctalia-dev/umbriel?submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     vicinae = {
       url = "github:vicinaehq/vicinae";
       inputs.systems.follows = "systems";
@@ -148,6 +153,7 @@
           }
 
           inputs.niri.nixosModules.niri
+          inputs.umbriel.nixosModules.default
           inputs.handy.nixosModules.default
 
           ./hosts/laptop/configuration.nix
@@ -186,6 +192,7 @@
               };
               home-manager.backupFileExtension = "backup";
 
+              programs.umbriel.enable = true;
               programs.handy.enable = true;
               users.users.madfox.extraGroups = [ "input" ];
 
@@ -211,6 +218,7 @@
           }
 
           inputs.niri.nixosModules.niri
+          inputs.umbriel.nixosModules.default
           inputs.handy.nixosModules.default
 
           ./hosts/gvino/configuration.nix
@@ -226,6 +234,7 @@
               # takes care of setting up portals & other system services
               programs.niri.enable = true;
               programs.niri.package = pkgs.niri;
+              programs.umbriel.enable = true;
 
               programs.uwsm = {
                 enable = true;
