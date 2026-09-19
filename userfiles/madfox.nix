@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  catppuccin,
   inputs,
   ...
 }:
@@ -20,6 +19,10 @@ let
   # Home packages (/etc/profiles/per-user/madfox/bin) shadow the system
   # neovim, which stays reachable at /run/current-system/sw/bin/nvim.
   nvfIsDefault = false;
+  catppuccinKde = pkgs.catppuccin-kde.override {
+    flavour = [ "mocha" ];
+    accents = [ "mauve" ];
+  };
 in
 {
   home.username = "madfox";
@@ -60,6 +63,7 @@ in
       alias j=z
       # nix
       alias use='nix-shell -p'
+      export PI_SKIP_VERSION_CHECK=1
     '';
   };
 
@@ -126,14 +130,18 @@ in
     };
   };
   qt.enable = true;
-  qt.style.catppuccin = {
-    enable = true;
-    apply = true;
-    accent = "blue";
-    flavor = "mocha";
-  };
   qt.style.name = "kvantum";
-  qt.platformTheme.name = "kvantum";
+  qt.platformTheme.name = "kde";
+
+  # Kvantum styles widgets, while KDE apps get their text and selection
+  # colors from kdeglobals. Apply a matching palette without replacing the
+  # rest of kdeglobals (which also contains application preferences).
+  xdg.dataFile."color-schemes/CatppuccinMochaMauve.colors".source =
+    "${catppuccinKde}/share/color-schemes/CatppuccinMochaMauve.colors";
+  home.activation.catppuccinKdeColors = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    ${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-colorscheme \
+      "${config.xdg.dataHome}/color-schemes/CatppuccinMochaMauve.colors"
+  '';
 
   home.stateVersion = "23.11";
 }
