@@ -19,6 +19,10 @@ let
   # Home packages (/etc/profiles/per-user/madfox/bin) shadow the system
   # neovim, which stays reachable at /run/current-system/sw/bin/nvim.
   nvfIsDefault = false;
+  catppuccinGtk = pkgs.catppuccin-gtk.override {
+    variant = "mocha";
+    accents = [ "mauve" ];
+  };
   catppuccinKde = pkgs.catppuccin-kde.override {
     flavour = [ "mocha" ];
     accents = [ "mauve" ];
@@ -125,8 +129,8 @@ in
   gtk = {
     enable = true;
     theme = {
-      name = "catppuccin-frappe-blue-standard";
-      package = pkgs.catppuccin-gtk;
+      name = "catppuccin-mocha-mauve-standard";
+      package = catppuccinGtk;
     };
   };
   qt.enable = true;
