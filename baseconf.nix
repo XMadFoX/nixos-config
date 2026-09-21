@@ -552,11 +552,6 @@ in
         PasswordAuthentication = true;
       };
     };
-
-    ollama = {
-      enable = true;
-      acceleration = "cuda";
-    };
   };
 
   virtualisation.containers.enable = true;
