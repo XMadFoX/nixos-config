@@ -184,6 +184,7 @@ in
         grimblast # Screenshot tool for Wayland
         sway-contrib.grimshot # Screenshot tool
         wtype
+        evtest
         dotool
         grimblast
         hyprlock
@@ -609,7 +610,7 @@ in
       };
     };
   };
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;

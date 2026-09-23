@@ -119,7 +119,7 @@
     variant = "";
   };
 
-  services.xserver.displayManager = {
+  services.displayManager = {
     gdm.enable = false;
     lightdm.enable = true;
   };

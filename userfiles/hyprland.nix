@@ -11,6 +11,7 @@
     enable = true;
     package = null;
     portalPackage = null;
+    configType = "hyprlang";
     plugins = [
       # Keep plugin packages sourced from the hyprland-plugins flake so they stay
       # locked to the same Hyprland revision as the compositor itself.

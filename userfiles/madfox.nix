@@ -96,7 +96,7 @@ in
     tray = true;
   };
 
-  services.vicinae = {
+  programs.vicinae = {
     enable = true;
     systemd = {
       enable = true;
@@ -124,10 +124,12 @@ in
   };
 
   catppuccin.enable = true;
+  catppuccin.autoEnable = false;
   catppuccin.flavor = "mocha";
   catppuccin.mako.enable = true;
   gtk = {
     enable = true;
+    gtk4.theme = config.gtk.theme;
     theme = {
       name = "catppuccin-mocha-mauve-standard";
       package = catppuccinGtk;
