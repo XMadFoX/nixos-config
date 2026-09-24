@@ -124,7 +124,7 @@ in
   };
 
   catppuccin.enable = true;
-  catppuccin.autoEnable = false;
+  catppuccin.autoEnable = true;
   catppuccin.flavor = "mocha";
   catppuccin.mako.enable = true;
   gtk = {
