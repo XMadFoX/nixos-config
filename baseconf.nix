@@ -72,6 +72,18 @@ in
     # clean tmp directory on boot
     tmp.cleanOnBoot = true;
     binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+    plymouth = {
+      enable = true;
+    };
+    # Enable "Silent boot"
+    consoleLogLevel = 3;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "rd.udev.log_level=3"
+      "rd.systemd.show_status=auto"
+    ];
   };
 
   # the kernel OOM is not good enough without swap,
