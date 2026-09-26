@@ -107,8 +107,7 @@ in
         "Mod+Shift+P" = "spawn:playerctl play-pause";
         "Mod+Ctrl+P" = "spawn:nsticky sticky toggle-active";
 
-
-        "Mod+Shift+S" = "noctalia msg screenshot-region";
+        "Mod+Shift+S" = "spawn:noctalia msg screenshot-region";
 
         "XF86AudioRaiseVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
         "XF86AudioLowerVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
