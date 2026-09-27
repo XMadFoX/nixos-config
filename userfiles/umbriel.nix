@@ -80,6 +80,24 @@ in
         };
       };
 
+      # Later rules win on the same field, so terminal opacity has to come last.
+      window_rule = [
+        {
+          match.is_focused = false;
+          opacity = 0.85;
+        }
+        {
+          match.is_focused = true;
+          opacity = 1.0;
+        }
+        {
+          match.app_id = "^(kitty|Alacritty)$";
+          blur = true;
+          blur_optimized = false;
+          opacity = 0.9;
+        }
+      ];
+
       output = {
         "DP-1" = {
           mode = "3440x1440@144";
