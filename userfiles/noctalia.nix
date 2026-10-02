@@ -14,6 +14,9 @@ let
   ];
 in
 {
+  # The flake module excludes the old path; Home Manager now uses a directory.
+  disabledModules = [ "programs/noctalia" ];
+
   # v5 module namespace (was programs.noctalia-shell in v4).
   programs.noctalia = {
     enable = true;
@@ -57,13 +60,13 @@ in
         };
 
         plugins = {
-          enabled = ["noctalia/bongocat"];
+          enabled = [ "noctalia/bongocat" ];
         };
 
         widget = {
           bongocat = {
             type = "noctalia/bongocat:cat";
-            input_devices = ["/dev/input/event3"];
+            input_devices = [ "/dev/input/event3" ];
             audio_spectrum = true;
             rave_mode = true;
             tappy_mode = true;
