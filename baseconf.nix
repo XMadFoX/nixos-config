@@ -63,7 +63,7 @@ in
   # allow non FOSS pkgs
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
-    "beekeeper-studio-5.5.5"
+    "beekeeper-studio-6.1.1"
     "electron-27.3.11" # for logseq
     "electron-39.8.10"
   ];
@@ -97,7 +97,7 @@ in
   services.gnome.gnome-keyring.enable = true;
 
   # bounded journal size
-  services.journald.extraConfig = "SystemMaxUse=500M";
+  services.journald.settings.Journal.SystemMaxUse = "500M";
 
   services.logmein-hamachi.enable = true;
 
@@ -453,7 +453,16 @@ in
         llm-agents.beads-viewer
         llm-agents.beads-rust
         llm-agents.mardi-gras
-        llm-agents.herdr
+        # GNU ld rejects overlapping unwind records from herdr's Zig dependency.
+        (llm-agents.herdr.overrideAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+            clang
+            lld
+          ];
+          env = (old.env or { }) // {
+            RUSTFLAGS = (old.env.RUSTFLAGS or "") + " -C linker=clang -C link-arg=-fuse-ld=lld";
+          };
+        }))
         llm-agents.agent-deck
         llm-agents.agentsview # usage
         llm-agents.ccusage # usage
