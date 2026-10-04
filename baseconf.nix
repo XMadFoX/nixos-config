@@ -283,7 +283,7 @@ in
         kubespy
         kubeconform
         iotop
-        pi-coding-agent
+        pi
         zed-editor-fhs
         tokei # line count
         delta # git diff cli

@@ -19,6 +19,10 @@
     master.url = "github:nixos/nixpkgs/master";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     catppuccin.url = "github:catppuccin/nix";
+    pi = {
+      url = "github:earendil-works/pi/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -123,12 +127,12 @@
             overlays = [
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
-              (import ./overlays/pi-coding-agent.nix)
+              inputs.pi.overlays.default
             ];
           };
         in
         {
-          pi-coding-agent = pkgs.pi-coding-agent;
+          pi-coding-agent = pkgs.pi;
           llama-cpp-turboquant = pkgs.llama-cpp-turboquant;
           llama-cpp-turboquant-cuda = pkgs.llama-cpp-turboquant-cuda;
           nsticky = inputs.nsticky.packages.${system}.nsticky;
@@ -145,7 +149,7 @@
             nixpkgs.overlays = [
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
-              (import ./overlays/pi-coding-agent.nix)
+              inputs.pi.overlays.default
               (import ./overlays/openldap.nix)
               inputs.llm-agents.overlays.default
               # (import ./overlays/ollama.nix)
@@ -211,7 +215,7 @@
             nixpkgs.overlays = [
               (import ./overlays/llama-cpp-turboquant.nix)
               (import ./overlays/zed-editor.nix)
-              (import ./overlays/pi-coding-agent.nix)
+              inputs.pi.overlays.default
               (import ./overlays/openldap.nix)
               inputs.llm-agents.overlays.shared-nixpkgs
             ];
