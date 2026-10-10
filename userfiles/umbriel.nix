@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 let
   workspaceNames = [
     "special"
@@ -19,6 +19,18 @@ in
     enable = true;
 
     settings = {
+      include.files = [
+        "${config.programs.umbriel.package}/share/umbriel/effects/animation/reveal/effect.toml"
+        "${config.programs.umbriel.package}/share/umbriel/effects/animation/squash/effect.toml"
+        "${config.programs.umbriel.package}/share/umbriel/effects/border/pulse/effect.toml"
+        "${config.programs.umbriel.package}/share/umbriel/effects/border/audio/effect.toml"
+        "${config.programs.umbriel.package}/share/umbriel/effects/window/scanlines/effect.toml"
+        "${config.programs.umbriel.package}/share/umbriel/effects/screen/vignette/effect.toml"
+        "${config.programs.umbriel.package}/share/umbriel/effects/cursor/glow/effect.toml"
+        "${config.programs.umbriel.package}/share/umbriel/effects/cursor/trail/effect.toml"
+        "${config.programs.umbriel.package}/share/umbriel/effects/cursor/trail-path/effect.toml"
+      ];
+
       general = {
         autostart = [
           "noctalia"
@@ -213,16 +225,14 @@ in
         "Mod+BracketRight" = "window-consume-or-expel-right";
         "Mod+Comma" = "window-consume-left";
         "Mod+Period" = "window-consume-right";
-        "Mod+R" = "window-cycle-width";
-        "Mod+Shift+R" = "window-cycle-height";
         "Mod+Shift+F" = "window-toggle-maximize";
         "Mod+F" = "window-toggle-fullscreen";
         "Mod+C" = "column-center";
         "Mod+Shift+C" = "spawn:hyprpicker | wl-copy";
-        "Mod+Minus" = "window-modify-width:-0.1";
-        "Mod+Equal" = "window-modify-width:0.1";
-        "Mod+Shift+Minus" = "window-modify-height:-0.1";
-        "Mod+Shift+Equal" = "window-modify-height:0.1";
+        "Mod+Minus" = "window-modify-width-right:-0.1";
+        "Mod+Equal" = "window-modify-width-right:0.1";
+        "Mod+Shift+Minus" = "window-modify-height-down:-0.1";
+        "Mod+Shift+Equal" = "window-modify-height-down:0.1";
         "Mod+V" = "window-toggle-floating";
         "Mod+Shift+V" = "window-focus-switch-floating";
         "Mod+Shift+E" = "spawn:wlogout";
