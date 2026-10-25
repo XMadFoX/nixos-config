@@ -7,6 +7,19 @@
 }:
 let
   nvidiaEnabled = config.hardware.nvidia.enable;
+  isx86 = pkgs.stdenv.hostPlatform.isx86_64;
+  # Unavailable on aarch64-linux (unsupported platform or i686/x86 binary deps).
+  x86Only = [
+    "spotify"
+    "lutris"
+    "protonup-qt"
+    "steam-run"
+    "rocm-runtime"
+    "lunarclient"
+    "discord"
+  ];
+  # Filters by name so x86 keeps the exact same list (and derivations).
+  forPlatform = builtins.filter (p: isx86 || !(builtins.elem (lib.getName p) x86Only));
 in
 {
   imports = [
@@ -71,7 +84,8 @@ in
   boot = {
     # clean tmp directory on boot
     tmp.cleanOnBoot = true;
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
+    # emulate arm only on x86
+    binfmt.emulatedSystems = lib.optionals isx86 [ "aarch64-linux" ];
 
     plymouth = {
       enable = true;
@@ -99,7 +113,7 @@ in
   # bounded journal size
   services.journald.settings.Journal.SystemMaxUse = "500M";
 
-  services.logmein-hamachi.enable = true;
+  services.logmein-hamachi.enable = isx86;
 
   services.flatpak.enable = true;
 
@@ -176,7 +190,7 @@ in
     NIXOS_OZONE_WL = 1;
   };
 
-  environment.systemPackages =
+  environment.systemPackages = forPlatform (
     with pkgs;
     let
       waylandPkgs = [
@@ -498,7 +512,8 @@ in
     ++ progPkgs
     ++ zuzeRicePkgs
     ++ llmAgentsPkgs
-    ++ minecraft;
+    ++ minecraft
+  );
 
   programs = {
     fish.enable = true;
@@ -510,7 +525,7 @@ in
       enableSSHSupport = true;
     };
     steam = {
-      enable = true;
+      enable = isx86;
       remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
       dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
       localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
@@ -549,17 +564,22 @@ in
     };
     printing = {
       enable = true;
-      drivers = with pkgs; [
-        gutenprint
-        gutenprintBin
-        hplip
-        postscript-lexmark
-        splix
-        brlaser
-        brgenml1lpr
-        brgenml1cupswrapper
-        cnijfilter2
-      ];
+      # Brother drivers come from pkgsi686Linux, which throws on evaluation off x86.
+      drivers =
+        with pkgs;
+        [ gutenprint ]
+        ++ lib.optionals isx86 [ gutenprintBin ]
+        ++ [
+          hplip
+          postscript-lexmark
+          splix
+          brlaser
+        ]
+        ++ lib.optionals isx86 [
+          brgenml1lpr
+          brgenml1cupswrapper
+        ]
+        ++ [ cnijfilter2 ];
     };
     # default touchpad support
     libinput.enable = true;

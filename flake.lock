@@ -198,6 +198,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792526520,
+        "narHash": "sha256-3hSJlv8mUVnZPMWK2+CM7a9O+nR6Z4mCh27NfLCmTPc=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "cedd626e11b635470fa6f9fdb8ad79b0075dd7f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "dms": {
       "inputs": {
         "dank-qml-common": "dank-qml-common",
@@ -1148,11 +1168,11 @@
         "nvf": "nvf"
       },
       "locked": {
-        "lastModified": 1790901372,
-        "narHash": "sha256-OXi63p6c4yasp2fH9UMPUwcIorYt6GUau5nM2pWxwec=",
+        "lastModified": 1792939129,
+        "narHash": "sha256-rCsc5x8SIaP7CmxQ0f7C//rTL8VPHLEC9WpacR2BerE=",
         "ref": "refs/heads/main",
-        "rev": "76ac926464f1027b9602e6a2bebb6f6a58c015c5",
-        "revCount": 3,
+        "rev": "85181edb974a1e5b4d6030964e5b8882b6a1f3dd",
+        "revCount": 4,
         "type": "git",
         "url": "file:///home/madfox/nix/nvf"
       },
@@ -1738,6 +1758,7 @@
       "inputs": {
         "catppuccin": "catppuccin",
         "chaotic": "chaotic",
+        "disko": "disko",
         "dms": "dms",
         "handy": "handy",
         "helium": "helium",
