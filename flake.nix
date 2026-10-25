@@ -16,6 +16,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     master.url = "github:nixos/nixpkgs/master";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     catppuccin.url = "github:catppuccin/nix";
@@ -288,6 +292,20 @@
               users.users.madfox.extraGroups = [ "input" ];
             }
           )
+        ];
+      };
+      # Reference only: aarch64 port of gvino, tested on a Hetzner CAX31.
+      nixosConfigurations.arm-example = self.nixosConfigurations.gvino.extendModules {
+        modules = [
+          inputs.disko.nixosModules.disko
+          ./hosts/arm-example/configuration.nix
+        ];
+      };
+
+      nixosConfigurations.arm-example-bootstrap = nixpkgs.lib.nixosSystem {
+        modules = [
+          inputs.disko.nixosModules.disko
+          ./hosts/arm-example/bootstrap.nix
         ];
       };
     };
