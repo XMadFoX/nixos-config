@@ -209,6 +209,8 @@
       "video"
       "render"
       "input"
+      "uinput"
+      "ydotool"
     ];
     packages = with pkgs; [
       kdePackages.kate

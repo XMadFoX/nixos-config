@@ -76,7 +76,7 @@ in
   # allow non FOSS pkgs
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
-    "beekeeper-studio-6.1.1"
+    "beekeeper-studio-6.1.4"
     "electron-27.3.11" # for logseq
     "electron-39.8.10"
   ];
@@ -92,7 +92,6 @@ in
     };
     # Enable "Silent boot"
     consoleLogLevel = 3;
-    initrd.verbose = false;
     kernelParams = [
       "quiet"
       "rd.udev.log_level=3"
@@ -112,8 +111,6 @@ in
 
   # bounded journal size
   services.journald.settings.Journal.SystemMaxUse = "500M";
-
-  services.logmein-hamachi.enable = isx86;
 
   services.flatpak.enable = true;
 
@@ -332,9 +329,9 @@ in
         # bottles # Open-source game launcher
         protonup-qt # Proton compatibility tool updater
         winetricks # Windows software installation helper
-        wineWowPackages.stable # Windows compatibility layer
-        wineWowPackages.waylandFull # Wayland-compatible Wine
-        # wine64Packages.waylandFull
+        # wineWowPackages.stable # Windows compatibility layer
+        # wineWowPackages.waylandFull # Wayland-compatible Wine
+        wine64Packages.waylandFull
         hydralauncher
         steam-run
         gamescope
@@ -425,7 +422,7 @@ in
       ];
       # Programming languages
       progPkgs = [
-        inputs.master.legacyPackages.${pkgs.stdenv.hostPlatform.system}.rtk # common programs proxy to reduce noisy output and make it more compact
+        rtk # common programs proxy to reduce noisy output and make it more compact
         python3 # Python 3
         lua5_4_compat # Lua 5.4
         lua54Packages.luarocks-nix # Lua package manager
@@ -533,6 +530,10 @@ in
     gamescope = {
       enable = true;
       capSysNice = true;
+    };
+    ydotool = {
+      enable = true;
+      group = "input";
     };
   };
 
@@ -653,6 +654,7 @@ in
   };
   services.pulseaudio.enable = false;
 
+  hardware.uinput.enable = true;
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   hardware.bluetooth.settings = {
