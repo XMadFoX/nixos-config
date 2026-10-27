@@ -26,6 +26,12 @@
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
 
+  # sched_ext: xanmod ships CONFIG_SCHED_CLASS_EXT=y
+  services.scx = {
+    enable = true;
+    scheduler = "scx_lavd";
+  };
+
   boot.initrd.luks.devices."luks-017b78f4-bbac-4bb5-9444-552eff123289".device =
     "/dev/disk/by-uuid/017b78f4-bbac-4bb5-9444-552eff123289";
   networking.hostName = "gvino"; # Define your hostname.
