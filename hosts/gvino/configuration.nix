@@ -14,6 +14,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../baseconf.nix
+    ./build-machines.nix
     ../../services.nix
     inputs.hyprland.nixosModules.default
   ];
