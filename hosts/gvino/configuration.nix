@@ -117,6 +117,17 @@
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = false;
   services.desktopManager.plasma6.enable = true;
+  # kded6 (auto-started by Kate/Dolphin outside Plasma) rewrites GTK colors.css via gtkconfig,
+  # segfaulting GTK apps through colorreload-gtk-module; bluedevil fights blueman.
+  # kded6 still reads "kded5rc" (hardcoded in kded.cpp).
+  # this fix breaks styles if plasma launched thru ly
+  environment.etc."xdg/kded5rc".text = ''
+    [Module-gtkconfig]
+    autoload=false
+
+    [Module-bluedevil]
+    autoload=false
+  '';
 
   # Configure keymap in X11
   services.xserver.xkb = {
