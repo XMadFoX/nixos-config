@@ -60,13 +60,13 @@ in
       layout = {
         mode = "scrolling";
         gap = 8;
-        width_presets = [
+        extent_presets = [
           0.33333
           0.5
           0.66667
         ];
         scrolling = {
-          default_width_fraction = 0.5;
+          default_extent_fraction = 0.5;
           center_underfull_strip = true;
         };
       };
@@ -74,8 +74,6 @@ in
       appearance = {
         prefer_no_csd = true;
         border_width = 4;
-        border_focused = "#ca9ee6";
-        border_unfocused = "#ca9ee655";
         corner_radius = 12;
         blur = {
           enabled = true;
@@ -88,8 +86,15 @@ in
           softness = 30;
           offset_x = 0;
           offset_y = 5;
-          color = "#00000077";
         };
+      };
+
+      colors = {
+        border = {
+          focused = "#ca9ee6";
+          unfocused = "#ca9ee655";
+        };
+        shadow = "#00000077";
       };
 
       # Later rules win on the same field, so terminal opacity has to come last.
@@ -129,27 +134,27 @@ in
 
       keybinds = {
         "Mod+Shift+Slash" = "cheatsheet-toggle";
-        "Mod+Return" = "spawn:kitty";
-        "Mod+D" = "spawn:vicinae toggle";
-        "Mod+W" = "spawn:handy --toggle-transcription";
-        "Super+Alt+L" = "spawn:swaylock";
-        "Mod+Shift+N" = "spawn:swaync-client -t -sw";
-        "Mod+Shift+P" = "spawn:playerctl play-pause";
-        "Mod+Ctrl+P" = "spawn:nsticky sticky toggle-active";
+        "Mod+Return" = "spawn kitty";
+        "Mod+D" = "spawn vicinae toggle";
+        "Mod+W" = "spawn handy --toggle-transcription";
+        "Super+Alt+L" = "spawn swaylock";
+        "Mod+Shift+N" = "spawn swaync-client -t -sw";
+        "Mod+Shift+P" = "spawn playerctl play-pause";
+        "Mod+Ctrl+P" = "spawn nsticky sticky toggle-active";
 
-        "Mod+Shift+S" = "spawn:noctalia msg screenshot-region";
+        "Mod+Shift+S" = "spawn noctalia msg screenshot-region";
 
-        "XF86AudioRaiseVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
-        "XF86AudioLowerVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
-        "XF86AudioMute" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        "XF86AudioMicMute" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-        "XF86AudioNext" = "spawn:playerctl next";
-        "XF86AudioPrev" = "spawn:playerctl previous";
-        "XF86AudioStop" = "spawn:playerctl stop";
-        "XF86AudioPause" = "spawn:playerctl play-pause";
-        "XF86AudioPlay" = "spawn:playerctl play-pause";
-        "XF86MonBrightnessUp" = "spawn:brightnessctl --class=backlight set +10%";
-        "XF86MonBrightnessDown" = "spawn:brightnessctl --class=backlight set 10%-";
+        "XF86AudioRaiseVolume" = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
+        "XF86AudioLowerVolume" = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
+        "XF86AudioMute" = "spawn wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        "XF86AudioMicMute" = "spawn wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+        "XF86AudioNext" = "spawn playerctl next";
+        "XF86AudioPrev" = "spawn playerctl previous";
+        "XF86AudioStop" = "spawn playerctl stop";
+        "XF86AudioPause" = "spawn playerctl play-pause";
+        "XF86AudioPlay" = "spawn playerctl play-pause";
+        "XF86MonBrightnessUp" = "spawn brightnessctl --class=backlight set +10%";
+        "XF86MonBrightnessDown" = "spawn brightnessctl --class=backlight set 10%-";
 
         "Mod+O" = "overview-toggle";
         "Mod+Shift+Q" = "window-close";
@@ -198,28 +203,28 @@ in
         "Mod+Shift+U" = "workspace-move-down";
         "Mod+Shift+I" = "workspace-move-up";
 
-        "Mod+1" = "workspace-switch:w1";
-        "Mod+2" = "workspace-switch:w2";
-        "Mod+3" = "workspace-switch:w3";
-        "Mod+4" = "workspace-switch:w4";
-        "Mod+5" = "workspace-switch:w5";
-        "Mod+6" = "workspace-switch:w6";
-        "Mod+7" = "workspace-switch:w7";
-        "Mod+8" = "workspace-switch:w8";
-        "Mod+9" = "workspace-switch:w9";
-        "Mod+M" = "workspace-switch:msg";
-        "Mod+S" = "workspace-switch:special";
-        "Mod+Shift+1" = "column-move-to-workspace:w1";
-        "Mod+Shift+2" = "column-move-to-workspace:w2";
-        "Mod+Shift+3" = "column-move-to-workspace:w3";
-        "Mod+Shift+4" = "column-move-to-workspace:w4";
-        "Mod+Shift+5" = "column-move-to-workspace:w5";
-        "Mod+Shift+6" = "column-move-to-workspace:w6";
-        "Mod+Shift+7" = "column-move-to-workspace:w7";
-        "Mod+Shift+8" = "column-move-to-workspace:w8";
-        "Mod+Shift+9" = "column-move-to-workspace:w9";
-        "Mod+Shift+M" = "column-move-to-workspace:msg";
-        "Mod+Ctrl+S" = "column-move-to-workspace:special";
+        "Mod+1" = "workspace-switch w1";
+        "Mod+2" = "workspace-switch w2";
+        "Mod+3" = "workspace-switch w3";
+        "Mod+4" = "workspace-switch w4";
+        "Mod+5" = "workspace-switch w5";
+        "Mod+6" = "workspace-switch w6";
+        "Mod+7" = "workspace-switch w7";
+        "Mod+8" = "workspace-switch w8";
+        "Mod+9" = "workspace-switch w9";
+        "Mod+M" = "workspace-switch msg";
+        "Mod+S" = "workspace-switch special";
+        "Mod+Shift+1" = "column-move-to-workspace w1";
+        "Mod+Shift+2" = "column-move-to-workspace w2";
+        "Mod+Shift+3" = "column-move-to-workspace w3";
+        "Mod+Shift+4" = "column-move-to-workspace w4";
+        "Mod+Shift+5" = "column-move-to-workspace w5";
+        "Mod+Shift+6" = "column-move-to-workspace w6";
+        "Mod+Shift+7" = "column-move-to-workspace w7";
+        "Mod+Shift+8" = "column-move-to-workspace w8";
+        "Mod+Shift+9" = "column-move-to-workspace w9";
+        "Mod+Shift+M" = "column-move-to-workspace msg";
+        "Mod+Ctrl+S" = "column-move-to-workspace special";
 
         "Mod+BracketLeft" = "window-consume-or-expel-left";
         "Mod+BracketRight" = "window-consume-or-expel-right";
@@ -228,14 +233,14 @@ in
         "Mod+Shift+F" = "window-toggle-maximize";
         "Mod+F" = "window-toggle-fullscreen";
         "Mod+C" = "column-center";
-        "Mod+Shift+C" = "spawn:hyprpicker | wl-copy";
-        "Mod+Minus" = "window-modify-width-right:-0.1";
-        "Mod+Equal" = "window-modify-width-right:0.1";
-        "Mod+Shift+Minus" = "window-modify-height-down:-0.1";
-        "Mod+Shift+Equal" = "window-modify-height-down:0.1";
+        "Mod+Shift+C" = "spawn hyprpicker | wl-copy";
+        "Mod+Minus" = "window-modify-width-right -0.1";
+        "Mod+Equal" = "window-modify-width-right 0.1";
+        "Mod+Shift+Minus" = "window-modify-height-down -0.1";
+        "Mod+Shift+Equal" = "window-modify-height-down 0.1";
         "Mod+V" = "window-toggle-floating";
         "Mod+Shift+V" = "window-focus-switch-floating";
-        "Mod+Shift+E" = "spawn:wlogout";
+        "Mod+Shift+E" = "spawn wlogout";
         "Ctrl+Alt+Delete" = "session-quit";
       };
     };
