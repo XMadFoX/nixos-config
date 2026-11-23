@@ -137,6 +137,11 @@ in
     '';
   };
 
+  programs.starship = {
+    enable = true;
+    presets = [ "catppuccin-powerline" ];
+  };
+
   fonts.packages = with pkgs; [
     dejavu_fonts
     open-sans
