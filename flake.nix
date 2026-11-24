@@ -300,6 +300,82 @@
           )
         ];
       };
+      nixosConfigurations.saperavi = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          nur.modules.nixos.default
+          chaotic.nixosModules.default
+          catppuccin.nixosModules.catppuccin
+          {
+            nixpkgs.overlays = [
+              (import ./overlays/zed-editor.nix)
+              inputs.pi.overlays.default
+              inputs.llm-agents.overlays.shared-nixpkgs
+            ];
+          }
+
+          inputs.niri.nixosModules.niri
+          inputs.umbriel.nixosModules.default
+          inputs.handy.nixosModules.default
+
+          ./hosts/saperavi/configuration.nix
+          home-manager.nixosModules.home-manager
+          (
+            { pkgs, ... }:
+            {
+              programs.niri.enable = true;
+              programs.niri.package = pkgs.niri;
+              programs.umbriel.enable = true;
+
+              programs.uwsm = {
+                enable = true;
+                waylandCompositors.niri = {
+                  prettyName = "niri";
+                  comment = "niri compositor managed by UWSM";
+                  binPath = "/run/current-system/sw/bin/niri";
+                };
+              };
+            }
+          )
+          mango.nixosModules.mango
+          (
+            { pkgs, ... }:
+            {
+              nix.settings = {
+                substituters = [
+                  "https://cache.numtide.com"
+                  "https://niri.cachix.org"
+                  "https://vicinae.cachix.org"
+                ];
+                trusted-public-keys = [
+                  "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+                  "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+                  "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+                ];
+              };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.madfox = {
+                imports = [
+                  inputs.hyprland.homeManagerModules.default
+                  inputs.vicinae.homeManagerModules.default
+                  inputs.handy.homeManagerModules.default
+                  inputs.nsticky.homeModules.default
+                  ./userfiles/madfox.nix
+                  catppuccin.homeModules.catppuccin
+                  mango.hmModules.mango
+                  inputs.dms.homeModules.dank-material-shell
+                  inputs.noctalia.homeModules.default
+                ];
+              };
+              home-manager.backupFileExtension = "backup";
+
+              programs.handy.enable = true;
+            }
+          )
+        ];
+      };
       # Reference only: aarch64 port of gvino, tested on a Hetzner CAX31.
       nixosConfigurations.arm-example = self.nixosConfigurations.gvino.extendModules {
         modules = [
