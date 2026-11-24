@@ -121,6 +121,33 @@ in
 
   programs = {
     zoxide.enable = true;
+
+    # Colors come from catppuccin/nix (autoEnable); only non-theme settings here.
+    kitty = {
+      enable = true;
+      font = {
+        name = "FiraCode Nerd Font Mono";
+        size = 10;
+      };
+    };
+    alacritty = {
+      enable = true;
+      settings = {
+        window.opacity = 0.97;
+        font = {
+          normal.family = "FiraCode Nerd Font Mono";
+          size = 10;
+        };
+      };
+    };
+    ghostty = {
+      enable = true;
+      settings = {
+        font-family = "FiraCode Nerd Font Mono";
+        font-size = 10;
+        background-opacity = 0.9;
+      };
+    };
   };
 
   catppuccin.enable = true;
