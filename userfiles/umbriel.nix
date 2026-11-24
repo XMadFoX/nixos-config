@@ -108,7 +108,7 @@ in
           opacity = 1.0;
         }
         {
-          match.app_id = "^(kitty|Alacritty)$";
+          match.app_id = "^(kitty|Alacritty|com.mitchellh.ghostty)$";
           blur = true;
           blur_optimized = false;
           opacity = 0.9;
