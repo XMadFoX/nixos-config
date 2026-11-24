@@ -81,6 +81,12 @@
       url = "github:vicinaehq/vicinae";
       inputs.systems.follows = "systems";
     };
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.vicinae.follows = "vicinae";
+      inputs.systems.follows = "systems";
+    };
     nsticky = {
       url = "github:lonerOrz/nsticky";
       inputs.nixpkgs.follows = "nixpkgs";

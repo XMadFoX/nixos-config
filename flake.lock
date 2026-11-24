@@ -343,6 +343,22 @@
         "type": "github"
       }
     },
+    "flake-compat_6": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -1778,6 +1794,7 @@
         "systems": "systems_7",
         "umbriel": "umbriel",
         "vicinae": "vicinae",
+        "vicinae-extensions": "vicinae-extensions",
         "zen-browser": "zen-browser"
       }
     },
@@ -2079,6 +2096,33 @@
       "original": {
         "owner": "vicinaehq",
         "repo": "vicinae",
+        "type": "github"
+      }
+    },
+    "vicinae-extensions": {
+      "inputs": {
+        "flake-compat": "flake-compat_6",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ],
+        "vicinae": [
+          "vicinae"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795217763,
+        "narHash": "sha256-XMuPu1ycx4aXiBuxwabMSAMYGhimZaEvfkPSf0GgneY=",
+        "owner": "vicinaehq",
+        "repo": "extensions",
+        "rev": "85282aa0fee6a3b8563db89f1874833c9e33e231",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vicinaehq",
+        "repo": "extensions",
         "type": "github"
       }
     },

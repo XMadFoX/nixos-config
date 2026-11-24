@@ -105,6 +105,25 @@ in
         USE_LAYER_SHELL = 1;
       };
     };
+    # Theme comes from catppuccin/nix (catppuccin.vicinae via autoEnable).
+    settings = {
+      launcher_window = {
+        opacity = 0.9;
+        compact_mode.enabled = false;
+      };
+      providers.files = {
+        enabled = false;
+        preferences.autoIndexing = false;
+      };
+    };
+    # "bluetooth" isn't in vicinaehq/extensions; it stays store-installed.
+    extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+      color-converter
+      it-tools
+      nix
+      port-killer
+      protondb-search
+    ];
   };
 
   services.handy.enable = true;
