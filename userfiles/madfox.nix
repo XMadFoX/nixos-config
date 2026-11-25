@@ -51,11 +51,14 @@ in
 
   programs.atuin = {
     enable = true;
+    # threads capture runs in the daemon; this also sets daemon.enabled + systemd socket
+    daemon.enable = true;
     settings = {
       auto_sync = true;
       sync_frequency = "5m";
       sync_address = "https://api.atuin.sh";
       search_mode = "fuzzy";
+      threads.capture = true;
     };
   };
 
