@@ -13,15 +13,17 @@
     ../../baseconf.nix
     ../../services.nix
     inputs.hyprland.nixosModules.default
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 10;
-      };
-      efi.canTouchEfiVariables = true;
+    loader.efi.canTouchEfiVariables = true;
+    # Signed systemd-boot + UKIs for Secure Boot (Valorant/Vanguard on the Windows side needs it on).
+    # Keys: `sudo sbctl create-keys` before first switch; enroll with `sbctl enroll-keys --microsoft --firmware-builtin`.
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+      configurationLimit = 10;
     };
     kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_stable;
   };
@@ -182,6 +184,7 @@
   environment.systemPackages = with pkgs; [
     neovim
     nh
+    sbctl
   ];
 
   system.stateVersion = "26.11";
