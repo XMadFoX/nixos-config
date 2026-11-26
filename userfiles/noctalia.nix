@@ -1,7 +1,7 @@
 { lib, osConfig, ... }:
 
 let
-  isTsiteli = osConfig.networking.hostName == "tsiteli";
+  isLaptop = lib.elem osConfig.networking.hostName [ "tsiteli" "saperavi" ];
 
   # Bar widgets shown on the right/end section (v5 widget IDs).
   endWidgets = [
@@ -115,7 +115,7 @@ in
         };
       }
 
-      (lib.mkIf isTsiteli {
+      (lib.mkIf isLaptop {
         bar.main.end = lib.mkForce ([ "battery" ] ++ endWidgets);
       })
     ];

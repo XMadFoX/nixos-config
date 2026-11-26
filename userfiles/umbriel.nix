@@ -115,18 +115,29 @@ in
         }
       ];
 
+      # Monitor identities ("Config name" from `umbriel outputs`) win over connector sections.
       output = {
-        "DP-1" = {
+        "Xiaomi Corporation Mi Monitor Unknown" = {
           mode = "3440x1440@144";
+          position = [ 0 0 ];
           vrr = "disabled";
+          workspaces = workspaceNames;
+        };
+        # saperavi panel
+        "EDO EF10QBC64.C Unknown" = {
+          mode = "2560x1600@165";
+          position = [ 3440 0 ];
+          scale = 1.125;
           workspaces = workspaceNames;
         };
         "HDMI-A-1" = {
           mode = "2560x1440@59.951";
           workspaces = workspaceNames;
         };
+        # tsiteli panel; shortcut: matched by connector, swap to its Config name once read on tsiteli.
         "eDP-1" = {
           mode = "2560x1440@165.003";
+          position = [ 3440 0 ];
           scale = 1.25;
           workspaces = workspaceNames;
         };

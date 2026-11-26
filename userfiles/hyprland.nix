@@ -22,10 +22,12 @@
     settings = {
       # monitor = ["eDP-1,2560x1440@96.011002,0x0,1" "DP-1,3440x1440@144,2560x0,1" "HDMI-A-1,3440x1440@72.028000,auto,1"];
       # monitor = ["eDP-1,2560x1440@96.011002,0x0,1" "DP-1,3440x1440@144,2560x0,1, vrr, 2" "HDMI-A-1,preferred,auto,1,mirror,DP-1"];
+      # Last matching rule wins, so desc: (monitor identity) rules stay after connector rules.
       monitor = [
-        "eDP-1,2560x1440@96.011002,0x0,1.25"
-        "DP-1,3440x1440@144,2560x0,1, vrr, 1"
+        "eDP-1,2560x1440@165.003,3440x0,1.25" # tsiteli panel
         "HDMI-A-1,preferred,auto,1"
+        "desc:EDO EF10QBC64.C,2560x1600@165,3440x0,1.125" # saperavi panel
+        "desc:Xiaomi Corporation Mi Monitor,3440x1440@144,0x0,1,vrr,1"
       ];
       # workspace= ["eDP-1,1" "HDMI-A-1,2" "DP-1,3"];
       workspace = [
