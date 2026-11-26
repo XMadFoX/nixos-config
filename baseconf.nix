@@ -675,4 +675,59 @@ in
 
   services.tailscale.enable = true;
   services.netbird.enable = true;
+
+  # Hosts opt in with services.syncthing.enable; folders are managed in the GUI.
+  services.syncthing = {
+    user = "madfox";
+    overrideFolders = false;
+    # Plaintext, created by hand (never in the repo); syncthing-init fails its last step until it exists.
+    guiPasswordFile = "/var/lib/syncthing/gui-password";
+    settings = {
+      gui.user = "madfox";
+      options = {
+        # Device IDs below are public; global discovery would map them to IPs.
+        globalAnnounceEnabled = false;
+        relaysEnabled = false;
+        urAccepted = -1;
+        crashReportingEnabled = false;
+      };
+      # overrideDevices (default) deletes devices added in the GUI on NixOS hosts.
+      devices = {
+        gvino = {
+          id = "X77AUTQ-CGXBKFN-ZWRRWV7-3XVGIET-WDBSOD4-PI5SEV6-GRSEVMQ-B7VL5AO";
+          addresses = [
+            "tcp://gvino.hs.local:22000"
+            "dynamic"
+          ];
+        };
+        tsiteli = {
+          id = "6HNWUX2-KG4WFSY-CQSUC4K-TZAS56S-ERTLFQF-MIXZ4MY-E3O5AG6-3USGYQ3";
+          addresses = [
+            "tcp://tsiteli.hs.local:22000"
+            "dynamic"
+          ];
+        };
+        saperavi = {
+          id = "Q7SGN7S-45J7GCA-QYIOBS5-HABO4OT-O6WG4B7-YA7U4DW-LOTQWFR-RX3A4AK";
+          addresses = [
+            "tcp://saperavi.hs.local:22000"
+            "dynamic"
+          ];
+        };
+        rkatsiteli = {
+          id = "GRVC2SK-I5DDB5A-JJZFDJT-XNK3L36-UJ4AMMA-WPW4OIR-OI2PN7T-TG7BRA3";
+          addresses = [
+            "tcp://rkatsiteli.hs.local:22000"
+            "dynamic"
+          ];
+        };
+        # No matching tailnet name; it dials the others.
+        rp12.id = "OIL6HGH-W5G6VJY-VX7H5HJ-J6O27VB-P2WCNEM-KW4Y5SZ-JB6AYVT-PZOLAQT";
+      };
+    };
+  };
+  # The module only creates dataDir for its own `syncthing` user.
+  systemd.tmpfiles.rules = lib.mkIf config.services.syncthing.enable [
+    "d /var/lib/syncthing 0700 madfox users -"
+  ];
 }

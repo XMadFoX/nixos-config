@@ -154,12 +154,7 @@
     pulse.enable = true;
   };
 
-  services.syncthing = {
-    enable = true;
-    openDefaultPorts = true;
-    overrideFolders = false;
-    user = "madfox";
-  };
+  services.syncthing.enable = true;
 
   users.users.madfox = {
     isNormalUser = true;

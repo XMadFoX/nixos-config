@@ -199,19 +199,7 @@
   # Make NVIDIA driver libraries visible to Sunshine's user service for NVENC/CUDA.
   systemd.user.services.sunshine.serviceConfig.Environment = "LD_LIBRARY_PATH=/run/opengl-driver/lib";
 
-  services.syncthing = {
-    enable = true;
-    openDefaultPorts = true;
-    overrideFolders = false;
-    user = "madfox";
-    settings = {
-      devices = {
-        "rp12" = {
-          id = "OIL6HGH-W5G6VJY-VX7H5HJ-J6O27VB-P2WCNEM-KW4Y5SZ-JB6AYVT-PZOLAQT";
-        };
-      };
-    };
-  };
+  services.syncthing.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.madfox = {

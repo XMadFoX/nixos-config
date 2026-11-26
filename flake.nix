@@ -165,7 +165,7 @@
               (import ./overlays/zed-editor.nix)
               inputs.pi.overlays.default
               (import ./overlays/openldap.nix)
-              inputs.llm-agents.overlays.default
+              inputs.llm-agents.overlays.shared-nixpkgs
               # (import ./overlays/ollama.nix)
             ];
           }
